@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Senat Pribadi</title>
+
+  <style>
+/* ===== RESET DASAR ===== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  transition: background 0.3s, color 0.3s;
+  font-family: Arial;
+  padding: 20px;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+}
+
+/* ===== THEME SYSTEM ===== */
+
+:root {
+  --bg: #ffffff;
+  --text: #111;
+  --card-bg: #ffffff;
+  --card-text: #111;
+}
+
+/* override manual */
+
+body.dark {
+  --bg: #0f1116;
+  --text: #ffffff;
+  --card-bg: #1a1d24;
+  --card-text: #e0e0e0;
+}
+
+/* ===== LAYOUT ===== */
+
+#opening {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#opening img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+#opening {
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+#opening.fade-out {
+  opacity: 0;
+}
+
+#opening::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+#opening.flash::after {
+  opacity: 1;
+}
+
+#closing {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+#closing img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transform: scale(1.1);
+}
+
+#closing.fade-out {
+  opacity: 0;
+}
+
+/* flash putih */
+
+#closing::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+#closing.flash::after {
+  opacity: 1;
+}
+
+.app {
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* ===== TEXTAREA ===== */
+textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px;
+  border-radius: 10px;
+
+  background: var(--card-bg);
+  color: var(--card-text);
+
+  border: 1px solid rgba(255,255,255,0.2);
+  caret-color: var(--card-text); /* warna kursor */
+
+  resize: vertical;
+}
+
+textarea::placeholder {
+  color: #888;
+}
+
+/* ===== BUTTON ===== */
+button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #4A90E2;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===== SENAT LIST ===== */
+#senat {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ===== CARD ===== */
+.card {
+  transition: background 0.3s, color 0.3s;
+  padding: 14px;
+  border-radius: 10px;
+  border-left: 4px solid;
+  font-size: 14px;
+  line-height: 1.5;
+  background: var(--card-bg);
+  color: var(--card-text);
+}
+
+.card b {
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* warna tiap role */
+.card.logika { border-color: #4A90E2; }
+.card.etika { border-color: #E8A23A; }
+.card.skeptis { border-color: #E74C3C; }
+.card.empati { border-color: #9B59B6; }
+.card.pragmatis { border-color: #2ECC71; }
+
+/* ===== SUMMARY ===== */
+#summary {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--text); 
+  opacity: 0.2;
+  font-weight: 500;
+  color: var(--card-text);
+}
+
+/* ===== TOGGLE ===== */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.theme-toggle input {
+  display: none;
+}
+
+.theme-toggle label {
+  width: 50px;
+  height: 26px;
+  background: #333;
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.theme-toggle label::after {
+  content: "";
+  width: 22px;
+  height: 22px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: 0.3s;
+}
+
+.theme-toggle input:checked + label {
+  background: #4caf50;
+}
+
+.theme-toggle input:checked + label::after {
+  transform: translateX(24px);
+}
+
+.thinking {
+  display: inline-block;
+}
+
+.thinking::after {
+  content: "";
+  animation: dots 1.2s infinite;
+}
+
+@keyframes dots {
+  0%   { content: ""; }
+  33%  { content: "."; }
+  66%  { content: ".."; }
+  100% { content: "..."; }
+}
+.cursor {
+  display: inline-block;
+  margin-left: 2px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
+
+
+  </style>
+</head>
+
+<body>
+    
+<div id="opening" style="display:none;">
+  <img src="opening.gif" id="openingGif">
+</div>
+
+<div id="closing" style="display:none;">
+  <img src="closing.gif">
+</div>
+ 
+<div class="topbar">
+    <div class="theme-toggle">
+        <input type="checkbox" id="themeSwitch">
+        <label for="themeSwitch"></label>
+        <span>Dark Mode</span>
+</div>
+
+</div>
+
+<div class="app">
+
+  <h2>🏛️Senat Priba️di🏛️</h2>
+
+  <div id="status" style="text-align:center; margin-bottom:10px;"></div>
+  <div id="input-area" style="display:none;">
+  <textarea id="input" placeholder="Tulis masalah..."></textarea>
+</div>
+  <button id="btn-run" onclick="run()">Buka Sidang</button>
+  <button id="btn-summary" onclick="tarikKesimpulan()" style="display:none;">
+  Tarik Kesimpulan
+  </button>
+
+  <div id="senat"></div>
+
+</div>
+
+<script>
+    let locked = false;
+    let history = [];
+    let hasStarted = false;
+
+// set awal sesuai system
+const toggle = document.getElementById("themeSwitch");
+
+// cek preferensi user dulu
+const saved = localStorage.getItem("theme");
+
+if (saved === "dark") {
+  document.body.classList.add("dark");
+  toggle.checked = true;
+} else if (saved === "light") {
+  document.body.classList.remove("dark");
+  toggle.checked = false;
+} else {
+  // fallback ke system
+  if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    document.body.classList.add("dark");
+    toggle.checked = true;
+  }
+}
+
+toggle.addEventListener("change", () => {
+  if (toggle.checked) {
+    document.body.classList.add("dark");
+    localStorage.setItem("theme", "dark");
+  } else {
+    document.body.classList.remove("dark");
+    localStorage.setItem("theme", "light");
+  }
+});
+
+const API_KEY = "AIzaSyA_n0lELdwfmV3obpmbrquABO2ZbOmxhXI";
+
+
+const ROLES = [
+  "🧠Logika",
+  "⚖️Etika",
+  "🔍Skeptis",
+  "❤️Empati",
+  "🛠️Pragmatis"
+];
+
+async function run() {
+  const btn = document.getElementById("btn-run");
+
+  // STEP 1: buka sidang
+  if (!hasStarted) {
+  hasStarted = true;
+
+  const btn = document.getElementById("btn-run");
+  const inputArea = document.getElementById("input-area");
+  const input = document.getElementById("input");
+  const opening = document.getElementById("opening");
+  const status = document.getElementById("status");
+
+  btn.disabled = true;
+
+  // STEP 1: teks muncul dulu
+  status.innerText = "Menyiapkan ruang sidang...";
+
+  // STEP 2: jeda sebentar → baru animasi
+  setTimeout(() => {
+    status.innerText = "Membuka pintu sidang...";
+
+    opening.style.display = "flex";
+    
+    setTimeout(() => {
+        opening.classList.add("flash");
+    }, 700);
+
+    // fade animasi
+    setTimeout(() => {
+      opening.classList.add("fade-out");
+    }, 600);
+
+    // selesai animasi
+    setTimeout(() => {
+      opening.style.display = "none";
+      opening.classList.remove("fade-out");
+
+      status.innerText = "Silakan mulai diskusi";
+
+      inputArea.style.display = "block";
+      input.focus();
+
+      btn.innerText = "Diskusikan";
+      btn.disabled = false;
+    }, 900);
+
+  }, 500);
+
+  return;
+}
+
+  // STEP 2: proses diskusi
+  if (locked) return;
+
+  const summaryBtn = document.getElementById("btn-summary");
+  const kasus = document.getElementById("input").value;
+
+  if (!kasus.trim()) {
+    alert("Isi dulu kasusnya");
+    return;
+  }
+
+  btn.disabled = true;
+
+  const senat = document.getElementById("senat");
+  senat.innerHTML = "";
+
+  const divs = {};
+  const results = {};
+
+  ROLES.forEach(role => {
+    const div = document.createElement("div");
+    const roleName = role.replace(/[^a-zA-Z]/g, "");
+    const roleClass = roleName.toLowerCase();
+
+    div.className = "card " + roleClass;
+    div.innerHTML = "<b>" + role + "</b><br><i class='thinking'>thinking</i>";
+
+    senat.appendChild(div);
+    divs[role] = div;
+  });
+
+  const raw = await askAI(kasus);
+  const parsed = parseResult(raw);
+
+  for (const role of ROLES) {
+    results[role] = parsed[role];
+    await typeText(divs[role], role, parsed[role]);
+  }
+
+  history.push("User: " + kasus);
+  history.push("Senat:\n" + raw);
+
+  summaryBtn.style.display = "inline-block";
+
+  btn.disabled = false;
+}
+
+function typeText(div, role, text) {
+  return new Promise(resolve => {
+    let i = 0;
+
+    div.innerHTML = "<b>" + role + "</b><br>";
+
+    const interval = setInterval(() => {
+      i++;
+
+      div.innerHTML =
+        "<b>" + role + "</b><br>" +
+        text.slice(0, i) +
+        (i < text.length ? "<span class='cursor'>|</span>" : "");
+
+      if (i >= text.length) {
+        clearInterval(interval);
+        resolve();
+      }
+    }, 15);
+  });
+}
+
+async function askAI(kasus) {
+  const context = history.join("\n");
+
+const prompt = `
+Jawab HARUS dengan format PERSIS berikut.
+JANGAN gunakan nomor, markdown, atau tambahan lain.
+
+Logika:
+...
+
+Etika:
+...
+
+Skeptis:
+...
+
+Empati:
+...
+
+Pragmatis:
+...
+
+Kasus:
+${kasus}
+`;
+
+  const res = await fetch(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": API_KEY
+      },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }]
+      })
+    }
+  );
+
+  const data = await res.json();
+
+  return data?.candidates?.[0]?.content?.parts?.[0]?.text || "Gagal";
+}
+
+function parseResult(text) {
+  const result = {};
+
+  const clean = text.replace(/\*\*/g, ""); // hilangkan bold
+
+  ROLES.forEach(role => {
+    const roleName = role.replace(/[^a-zA-Z]/g, "");
+
+    const regex = new RegExp(
+      roleName + "\\s*:?\\s*([\\s\\S]*?)(?=\\n\\s*[A-Z][a-z]+\\s*:|$)",
+      "i"
+    );
+
+    const match = clean.match(regex);
+
+    result[role] = match ? match[1].trim() : "Tidak ada";
+  });
+
+  return result;
+}
+
+async function tarikKesimpulan() {
+  if (locked) return;
+  locked = true;
+
+  const btn = document.getElementById("btn-run");
+  const summaryBtn = document.getElementById("btn-summary");
+  const input = document.getElementById("input");
+  const summaryDiv = document.getElementById("summary");
+  const closing = document.getElementById("closing");
+
+  btn.disabled = true;
+  summaryBtn.disabled = true;
+  input.disabled = true;
+
+  // STEP 1: flash putih
+  closing.style.display = "flex";
+
+  setTimeout(() => {
+    closing.classList.add("flash");
+  }, 50);
+
+  // STEP 2: hilangkan flash → lanjut animasi pintu
+  setTimeout(() => {
+    closing.classList.remove("flash");
+  }, 200);
+
+  // STEP 3: fade keluar setelah animasi
+  setTimeout(() => {
+    closing.classList.add("fade-out");
+  }, 800); // sesuaikan durasi GIF
+
+  // STEP 4: ambil kesimpulan sambil animasi jalan
+  const context = history.join("\n");
+
+  const res = await fetch(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": API_KEY
+      },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: `
+Berikut seluruh diskusi:
+
+${context}
+
+Buat kesimpulan final yang tegas dan membantu pengambilan keputusan.
+`
+          }]
+        }]
+      })
+    }
+  );
+
+  const data = await res.json();
+  const hasil =
+    data?.candidates?.[0]?.content?.parts?.[0]?.text || "Gagal";
+
+  // STEP 5: selesai animasi → tampilkan hasil
+  setTimeout(() => {
+    closing.style.display = "none";
+    closing.classList.remove("fade-out");
+
+    summaryDiv.innerText = hasil;
+    summaryDiv.setAttribute("contenteditable", "false");
+  }, 1200);
+}
+
+</script>
+
+</body>
+</html>

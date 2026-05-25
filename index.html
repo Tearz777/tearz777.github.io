@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thery Vissabil Lillah — Operations & Systems Enthusiast</title>
+  <meta name="description" content="Portfolio of Thery Vissabil Lillah — Operations professional turned systems builder. ERP, WMS, POS, data analysis, and automation tools built from mobile phone.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0e1a;
+      --bg-secondary: #111827;
+      --bg-card: #1a2332;
+      --bg-card-hover: #1e293b;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent: #06b6d4;
+      --accent-glow: rgba(6, 182, 212, 0.3);
+      --border: #1e293b;
+      --border-hover: #334155;
+      --badge-bg: rgba(6, 182, 212, 0.1);
+      --badge-text: #22d3ee;
+      --shadow: rgba(0, 0, 0, 0.4);
+      --gradient-start: #06b6d4;
+      --gradient-end: #3b82f6;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #f1f5f9;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f8fafc;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent: #0891b2;
+      --accent-glow: rgba(8, 145, 178, 0.15);
+      --border: #e2e8f0;
+      --border-hover: #cbd5e1;
+      --badge-bg: rgba(8, 145, 178, 0.1);
+      --badge-text: #0e7490;
+      --shadow: rgba(0, 0, 0, 0.08);
+      --gradient-start: #0891b2;
+      --gradient-end: #2563eb;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: background 0.3s ease, color 0.3s ease;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    /* Navigation */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(10, 14, 26, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+    [data-theme="light"] nav { background: rgba(248, 250, 252, 0.85); }
+    .nav-container {
+      max-width: 1100px; margin: 0 auto; padding: 16px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .nav-logo { font-weight: 700; font-size: 18px; color: var(--text-primary); text-decoration: none; letter-spacing: -0.5px; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500;
+      transition: color 0.2s ease; position: relative;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+      background: var(--accent); transition: width 0.2s ease;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .theme-toggle {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 50px;
+      padding: 8px 14px; cursor: pointer; display: flex; align-items: center; gap: 8px;
+      color: var(--text-secondary); font-size: 13px; font-weight: 500;
+      transition: all 0.2s ease; font-family: inherit;
+    }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    .menu-btn { display: none; background: none; border: none; color: var(--text-primary); font-size: 24px; cursor: pointer; }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      padding: 100px 24px 60px; position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, var(--accent-glow), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(59, 130, 246, 0.05), transparent);
+      pointer-events: none;
+    }
+    .hero-content { text-align: center; max-width: 700px; position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--badge-bg); color: var(--badge-text);
+      padding: 8px 16px; border-radius: 50px; font-size: 13px; font-weight: 500;
+      margin-bottom: 24px; border: 1px solid var(--accent-glow);
+      animation: fadeInUp 0.6s ease;
+    }
+    .hero-badge .pulse { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
+    .hero h1 { font-size: clamp(36px, 6vw, 56px); font-weight: 800; line-height: 1.1; margin-bottom: 16px; letter-spacing: -1.5px; animation: fadeInUp 0.6s ease 0.1s both; }
+    .hero h1 .gradient { background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-subtitle { font-size: clamp(16px, 2.5vw, 20px); color: var(--text-secondary); margin-bottom: 32px; font-weight: 400; animation: fadeInUp 0.6s ease 0.2s both; }
+    .hero-desc { font-size: 15px; color: var(--text-muted); max-width: 520px; margin: 0 auto 40px; line-height: 1.7; animation: fadeInUp 0.6s ease 0.3s both; }
+    .hero-cta { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; animation: fadeInUp 0.6s ease 0.4s both; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px;
+      border-radius: 10px; font-size: 14px; font-weight: 600; text-decoration: none;
+      transition: all 0.2s ease; cursor: pointer; font-family: inherit; border: none;
+    }
+    .btn-primary { background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); color: white; box-shadow: 0 4px 20px var(--accent-glow); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
+    .btn-secondary { background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border); }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Sections */
+    section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 48px; }
+    .section-label {
+      display: inline-block; background: var(--badge-bg); color: var(--badge-text);
+      padding: 6px 14px; border-radius: 50px; font-size: 12px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;
+    }
+    .section-title { font-size: clamp(28px, 4vw, 36px); font-weight: 700; letter-spacing: -1px; margin-bottom: 12px; }
+    .section-desc { color: var(--text-secondary); font-size: 16px; max-width: 520px; margin: 0 auto; }
+
+    /* About */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .about-text { font-size: 15px; color: var(--text-secondary); line-height: 1.8; }
+    .about-text p { margin-bottom: 16px; }
+    .about-text strong { color: var(--text-primary); }
+    .about-highlights { display: flex; flex-direction: column; gap: 16px; }
+    .highlight-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 20px; transition: all 0.2s ease;
+    }
+    .highlight-card:hover { border-color: var(--border-hover); transform: translateX(4px); }
+    .highlight-card h4 { font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .highlight-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0; }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before { content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+    .timeline-item { position: relative; padding-bottom: 40px; animation: fadeInUp 0.5s ease both; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-dot { position: absolute; left: -32px; top: 4px; width: 16px; height: 16px; background: var(--bg-primary); border: 3px solid var(--accent); border-radius: 50%; transition: all 0.3s ease; }
+    .timeline-item:hover .timeline-dot { background: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
+    .timeline-content { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: all 0.2s ease; }
+    .timeline-content:hover { border-color: var(--border-hover); transform: translateX(4px); }
+    .timeline-date { font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .timeline-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .timeline-place { font-size: 14px; color: var(--text-secondary); margin-bottom: 12px; }
+    .timeline-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+    /* Tech Stack */
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .tech-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 24px; transition: all 0.2s ease; position: relative; overflow: hidden;
+    }
+    .tech-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end)); opacity: 0; transition: opacity 0.2s ease; }
+    .tech-card:hover::before { opacity: 1; }
+    .tech-card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
+    .tech-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .tech-icon { width: 40px; height: 40px; background: var(--badge-bg); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .tech-name { font-weight: 700; font-size: 16px; }
+    .tech-version { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); background: var(--badge-bg); padding: 4px 10px; border-radius: 6px; display: inline-block; }
+    .tech-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+    /* Case Studies */
+    .case-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; }
+    .case-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; transition: all 0.3s ease;
+    }
+    .case-card:hover { border-color: var(--border-hover); transform: translateY(-5px); box-shadow: 0 20px 40px var(--shadow); }
+    .case-image { width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid var(--border); background: var(--bg-secondary); }
+    .case-body { padding: 24px; }
+    .case-meta { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+    .case-tag { font-size: 11px; font-weight: 600; color: var(--badge-text); background: var(--badge-bg); padding: 4px 10px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .case-title { font-size: 20px; font-weight: 700; margin-bottom: 10px; line-height: 1.3; }
+    .case-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; }
+    .case-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .case-stat { text-align: center; }
+    .case-stat-value { font-size: 20px; font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; text-shadow: 0 0 20px var(--accent-glow); }
+    .case-stat-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .metric-highlight { font-weight: 700; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
+    .case-link { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); text-decoration: none; font-size: 14px; font-weight: 600; margin-top: 16px; transition: gap 0.2s ease; }
+    .case-link:hover { gap: 10px; }
+
+    /* Projects */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+    .project-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 0; text-decoration: none; color: inherit; transition: all 0.25s ease;
+      position: relative; overflow: hidden; display: flex; flex-direction: column;
+    }
+    .project-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end)); opacity: 0; transition: opacity 0.25s ease; }
+    .project-card:hover::after { opacity: 1; }
+    .project-card:hover { border-color: var(--border-hover); transform: translateY(-5px); box-shadow: 0 20px 40px var(--shadow); }
+    .project-preview {
+      height: 160px; background: var(--bg-secondary); display: flex; align-items: center;
+      justify-content: center; font-size: 48px; border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .project-preview::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, var(--accent-glow), transparent); opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .project-card:hover .project-preview::before { opacity: 1; }
+    .project-body { padding: 24px; flex-grow: 1; display: flex; flex-direction: column; }
+    .project-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .project-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; flex-grow: 1; margin-bottom: 16px; }
+    .project-tech { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .project-tech-tag {
+      font-size: 11px; font-weight: 600; color: var(--text-secondary);
+      background: var(--bg-secondary); padding: 3px 8px; border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .project-tag { font-size: 11px; font-weight: 600; color: var(--badge-text); background: var(--badge-bg); padding: 4px 10px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* Certs */
+    .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+    .cert-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: all 0.2s ease; }
+    .cert-card:hover { border-color: var(--border-hover); }
+    .cert-org { font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .cert-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; }
+    .cert-date { font-size: 13px; color: var(--text-muted); }
+
+    /* Contact */
+    .contact-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 48px; text-align: center; max-width: 600px; margin: 0 auto; }
+    .contact-box h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+    .contact-box p { color: var(--text-secondary); margin-bottom: 24px; }
+    .contact-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .contact-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.2s ease; }
+    .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    /* Footer */
+    footer { text-align: center; padding: 40px 24px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 13px; }
+    footer .heart { color: #ef4444; }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .nav-links { display: none; position: absolute; top: 60px; left: 0; right: 0; background: var(--bg-primary); border-bottom: 1px solid var(--border); flex-direction: column; padding: 20px; gap: 16px; }
+      .nav-links.active { display: flex; z-index: 1001; }
+      .menu-btn { display: block; }
+      .hero { padding-top: 80px; }
+      .hero-cta { flex-direction: column; align-items: center; }
+      .btn { width: 100%; justify-content: center; max-width: 280px; }
+      section { padding: 60px 20px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .timeline { padding-left: 24px; }
+      .timeline-dot { left: -24px; width: 12px; height: 12px; }
+      .contact-box { padding: 32px 24px; }
+      .case-grid { grid-template-columns: 1fr; }
+      .case-stats { grid-template-columns: repeat(2, 1fr); }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-container">
+      <a href="#" class="nav-logo">Thery<span>.</span></a>
+      <button class="menu-btn" onclick="toggleMenu()" aria-label="Open navigation menu">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="#about">About</a>
+        <a href="#journey">Journey</a>
+        <a href="#stack">Stack</a>
+        <a href="#cases">Cases</a>
+        <a href="#projects">Projects</a>
+        <a href="#training">Training</a>
+        <a href="#certs">Certs</a>
+        <a href="#contact">Contact</a>
+        <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle dark/light theme">
+          <span id="themeIcon">🌙</span>
+          <span id="themeText">Dark</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="pulse"></span>
+        Built entirely from a mobile phone via Termux
+      </div>
+      <h1>
+        Thery Vissabil<br><span class="gradient">Lillah</span>
+      </h1>
+      <p class="hero-subtitle">Operations & Systems Enthusiast</p>
+      <p class="hero-desc">
+        Experienced in warehouse operations and logistics, now focused on building digital solutions 
+        using Excel, Python, and web technologies to help automate SME businesses. 
+        AI-assisted development with real operational understanding.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects →</a>
+        <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="section-header reveal">
+      <div class="section-label">Who I Am</div>
+      <h2 class="section-title">About Me</h2>
+      <p class="section-desc">Not a typical developer path. And that's the point.</p>
+    </div>
+
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>
+          I started in <strong>warehouse operations</strong> — managing inventory, processing inbound/outbound goods, 
+          and maintaining stock accuracy. For years, I lived the pain of manual tracking, paper logs, 
+          and spreadsheets that never quite worked.
+        </p>
+        <p>
+          That frustration became fuel. I learned <strong>Excel Power Query</strong> and data analysis to automate 
+          reports. Then <strong>Python</strong> to build tools. Then <strong>web technologies</strong> to create systems 
+          that others could actually use.
+        </p>
+        <p>
+          Today, I build <strong>ERP, WMS, and POS systems</strong> — not from a coding bootcamp, 
+          but from real operational needs I experienced firsthand. Every feature I code solves a problem 
+          I've actually faced on the warehouse floor.
+        </p>
+        <p>
+          <strong>Built with AI-assisted development</strong>, guided by operational knowledge, 
+          shipped from an Android phone via Termux. No laptop. No excuses.
+        </p>
+      </div>
+
+      <div class="about-highlights">
+        <div class="highlight-card">
+          <h4>🎯 Operational Mindset</h4>
+          <p>5+ years in warehouse, logistics, and field operations. I don't just code — I understand the business flow.</p>
+        </div>
+        <div class="highlight-card">
+          <h4>📊 Data-Driven</h4>
+          <p>Certified in Excel Power Query, Data Analysis, and Statistics. Numbers tell stories — I help them speak.</p>
+        </div>
+        <div class="highlight-card">
+          <h4>🔧 Systems Builder</h4>
+          <p>Full-stack ERP with multi-tenant architecture, built from mobile. Backend + frontend + database — all in one.</p>
+        </div>
+        <div class="highlight-card">
+          <h4>🚀 Self-Learner</h4>
+          <p>No CS degree. No bootcamp. Just curiosity, consistency, and shipping real tools that solve real problems.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Journey -->
+  <section id="journey">
+    <div class="section-header reveal">
+      <div class="section-label">The Path</div>
+      <h2 class="section-title">My Journey</h2>
+      <p class="section-desc">From accounting school to coding on a phone — every step counts.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">2009 — 2012</div>
+          <div class="timeline-title">SMK Dr. Soetomo Surabaya</div>
+          <div class="timeline-place">Jurusan Akuntansi</div>
+          <div class="timeline-desc">Foundation in numbers, structure, and financial discipline. The starting point of everything.</div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">2016 — 2018</div>
+          <div class="timeline-title">Admin Gudang</div>
+          <div class="timeline-place">Sumbawa Shop, Surabaya</div>
+          <div class="timeline-desc">Managed inventory for 252+ SKUs, processed inbound/outbound goods, and maintained warehouse operations. Learned the value of systems and data accuracy.</div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">2018 — 2021</div>
+          <div class="timeline-title">Kebun Sawit Maintenance</div>
+          <div class="timeline-place">PT. Bumitama Gunajaya Agro, Kotawaringin Lama</div>
+          <div class="timeline-desc">Field work taught resilience and problem-solving under pressure. Every day was about optimizing processes in tough conditions.</div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">2023</div>
+          <div class="timeline-title">Data Analysis Certifications</div>
+          <div class="timeline-place">Kelas.Work & MySkill.id</div>
+          <div class="timeline-desc">Excel Power Query, Statistics, Data Analysis Fundamentals — the bridge from warehouse admin to data-driven thinking.</div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">2024 — Present</div>
+          <div class="timeline-title">Systems Builder</div>
+          <div class="timeline-place">Surabaya, Indonesia — via Termux on Android</div>
+          <div class="timeline-desc">Building full-stack ERP (WMS, POS, Accounting), data tools, and AI assistants entirely from a mobile phone. Python, Vue.js, SQLite, Git — all in the palm of my hand.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section id="stack">
+    <div class="section-header reveal">
+      <div class="section-label">Tools</div>
+      <h2 class="section-title">Tech Stack</h2>
+      <p class="section-desc">Everything running on Termux — no laptop required.</p>
+    </div>
+
+    <div class="tech-grid">
+      <div class="tech-card reveal">
+        <div class="tech-header">
+          <div class="tech-icon">🐍</div>
+          <div>
+            <div class="tech-name">Python</div>
+            <span class="tech-version">3.13.13</span>
+          </div>
+        </div>
+        <p class="tech-desc">Backend logic, data analysis, automation scripts. FastAPI for API, Pandas for data, SQLAlchemy for ORM.</p>
+      </div>
+
+      <div class="tech-card reveal">
+        <div class="tech-header">
+          <div class="tech-icon">⚡</div>
+          <div>
+            <div class="tech-name">Node.js</div>
+            <span class="tech-version">v25.8.2</span>
+          </div>
+        </div>
+        <p class="tech-desc">Build tooling and frontend dev server. Vite bundler for Vue.js SPA development.</p>
+      </div>
+
+      <div class="tech-card reveal">
+        <div class="tech-header">
+          <div class="tech-icon">🗄️</div>
+          <div>
+            <div class="tech-name">SQLite</div>
+            <span class="tech-version">3.53.0</span>
+          </div>
+        </div>
+        <p class="tech-desc">Zero-config database for all projects. Multi-tenant ERP data, inventory, transactions — all in .db files.</p>
+      </div>
+
+      <div class="tech-card reveal">
+        <div class="tech-header">
+          <div class="tech-icon">🔀</div>
+          <div>
+            <div class="tech-name">Git</div>
+            <span class="tech-version">2.54.0</span>
+          </div>
+        </div>
+        <p class="tech-desc">Version control via command line. Commit, branch, push — straight from Termux terminal.</p>
+      </div>
+
+      <div class="tech-card reveal">
+        <div class="tech-header">
+          <div class="tech-icon">🖖</div>
+          <div>
+            <div class="tech-name">Vue.js 3</div>
+            <span class="tech-version">Frontend</span>
+          </div>
+        </div>
+        <p class="tech-desc">Progressive frontend framework for ERP dashboard. Composition API, Pinia state management, Vue Router.</p>
+      </div>
+
+      <div class="tech-card reveal">
+        <div class="tech-header">
+          <div class="tech-icon">📊</div>
+          <div>
+            <div class="tech-name">Excel Power Query</div>
+            <span class="tech-version">Certified</span>
+          </div>
+        </div>
+        <p class="tech-desc">Data transformation and ETL workflows. The skill that sparked the transition from admin to analyst.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Studies -->
+  <section id="cases">
+    <div class="section-header reveal">
+      <div class="section-label">Deep Dives</div>
+      <h2 class="section-title">Case Studies</h2>
+      <p class="section-desc">Real-world data work before the code. Excel mastery that became the foundation for everything.</p>
+    </div>
+
+    <div class="case-grid">
+      <div class="case-card reveal">
+        <div class="case-image" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f172a,#1e293b);font-size:64px;">📦</div>
+        <div class="case-body">
+          <div class="case-meta">
+            <span class="case-tag">Excel</span>
+            <span class="case-tag">WMS</span>
+            <span class="case-tag">Inventory</span>
+          </div>
+          <h3 class="case-title">Warehouse Management System</h3>
+          <p class="case-desc">
+            Built a complete WMS in Excel with 252 SKUs tracked across Master Barang, Jadwal (PO tracking), 
+            and Transaksi (movement logs). Auto-calculated stock balances, inventory valuation, and 
+            9-category product classification.
+          </p>
+          <div class="case-stats">
+            <div class="case-stat"><div class="case-stat-value">252</div><div class="case-stat-label">SKUs</div></div>
+            <div class="case-stat"><div class="case-stat-value">9</div><div class="case-stat-label">Categories</div></div>
+            <div class="case-stat"><div class="case-stat-value">348B</div><div class="case-stat-label">Total Value</div></div>
+          </div>
+          <a href="#" class="case-link">View Details →</a>
+        </div>
+      </div>
+
+      <div class="case-card reveal">
+        <div class="case-image" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f172a,#1e293b);font-size:64px;">📊</div>
+        <div class="case-body">
+          <div class="case-meta">
+            <span class="case-tag">Accounting</span>
+            <span class="case-tag">Financial</span>
+            <span class="case-tag">Excel</span>
+          </div>
+          <h3 class="case-title">Full Accounting Cycle</h3>
+          <p class="case-desc">
+            Designed a complete manual accounting system for PT Gunung Semeru — from Journal Entries to 
+            General Ledger, Adjusting Entries, 10-Column Worksheet, and Financial Statements with Closing Entries. 
+            PSAK-compliant depreciation schedules included.
+          </p>
+          <div class="case-stats">
+            <div class="case-stat"><div class="case-stat-value">10+</div><div class="case-stat-label">Journals</div></div>
+            <div class="case-stat"><div class="case-stat-value">22</div><div class="case-stat-label">Accounts</div></div>
+            <div class="case-stat"><div class="case-stat-value">2.5B</div><div class="case-stat-label">Total Assets</div></div>
+          </div>
+          <a href="#" class="case-link">View Details →</a>
+        </div>
+      </div>
+
+      <div class="case-card reveal">
+        <div class="case-image" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f172a,#1e293b);font-size:64px;">⚙️</div>
+        <div class="case-body">
+          <div class="case-meta">
+            <span class="case-tag">Engineering</span>
+            <span class="case-tag">PSAK</span>
+            <span class="case-tag">Google Sheets</span>
+          </div>
+          <h3 class="case-title">5-Method Depreciation Engine</h3>
+          <p class="case-desc">
+            Built a Google Sheets engine calculating depreciation across 5 PSAK-compliant methods: 
+            Straight Line, Declining Balance, Double Declining, Units of Production, and Sum-of-Years' Digits — 
+            all with automatic pro-rata by actual days.
+          </p>
+          <div class="case-stats">
+            <div class="case-stat"><div class="case-stat-value">5</div><div class="case-stat-label">Methods</div></div>
+            <div class="case-stat"><div class="case-stat-value">25</div><div class="case-stat-label">Years Max</div></div>
+            <div class="case-stat"><div class="case-stat-value">Auto</div><div class="case-stat-label">Pro-Rata</div></div>
+          </div>
+          <a href="#" class="case-link">View Details →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="section-header reveal">
+      <div class="section-label">Work</div>
+      <h2 class="section-title">Projects</h2>
+      <p class="section-desc">Real tools, real data, real shipping — all from a phone.</p>
+    </div>
+
+    <div class="projects-grid">
+      <a href="senat/" class="project-card reveal">
+        <div class="project-preview">🏛️</div>
+        <div class="project-body">
+          <h3 class="project-title">Senat Pribadi</h3>
+          <p class="project-desc">AI-powered decision assistant that analyzes choices from multiple perspectives. Like having a personal advisory board in your pocket. Helps break decision paralysis by simulating different viewpoints.</p>
+          <div class="project-tech">
+            <span class="project-tech-tag">Python</span>
+            <span class="project-tech-tag">LLM API</span>
+            <span class="project-tech-tag">CLI</span>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">AI</span>
+            <span class="project-tag">Termux</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="education/" class="project-card reveal">
+        <div class="project-preview">📊</div>
+        <div class="project-body">
+          <h3 class="project-title">Education Analysis</h3>
+          <p class="project-desc">Data-driven exploration of education and healthcare facilities across regions. Turning raw government datasets into actionable insights for community development and resource allocation.</p>
+          <div class="project-tech">
+            <span class="project-tech-tag">Python</span>
+            <span class="project-tech-tag">Pandas</span>
+            <span class="project-tech-tag">Matplotlib</span>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">Data Viz</span>
+            <span class="project-tag">Public Data</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="mlbb/" class="project-card reveal">
+        <div class="project-preview">🎮</div>
+        <div class="project-body">
+          <h3 class="project-title">MLBB Analysis</h3>
+          <p class="project-desc">Deep dive into Mobile Legends hero stats, meta trends, and win-rate analytics. SQLite-backed database with statistical analysis for players who want data-driven picks, not just gut feeling.</p>
+          <div class="project-tech">
+            <span class="project-tech-tag">Python</span>
+            <span class="project-tech-tag">SQLite</span>
+            <span class="project-tech-tag">Statistics</span>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">Gaming</span>
+            <span class="project-tag">Analytics</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="datacraft/" class="project-card reveal">
+        <div class="project-preview">⚙️</div>
+        <div class="project-body">
+          <h3 class="project-title">DataCraft</h3>
+          <p class="project-desc">CLI Swiss Army knife for data work: cleaning dirty datasets, profiling column statistics, merging multi-file sources, and transforming formats — all from the command line. Built for repetitive data tasks.</p>
+          <div class="project-tech">
+            <span class="project-tech-tag">Python</span>
+            <span class="project-tech-tag">Click</span>
+            <span class="project-tech-tag">Pandas</span>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">CLI</span>
+            <span class="project-tag">Automation</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="wms/" class="project-card reveal">
+        <div class="project-preview">🗒️</div>
+        <div class="project-body">
+          <h3 class="project-title">NotaCore ERP</h3>
+          <p class="project-desc">Lightweight ERP PWA for SMEs: Warehouse Management, POS, and Accounting. Multi-tenant architecture with role-based access. Built from real warehouse experience, coded entirely on Android via Termux.</p>
+          <div class="project-tech">
+            <span class="project-tech-tag">Python</span>
+            <span class="project-tech-tag">Vue.js 3</span>
+            <span class="project-tech-tag">SQLite</span>
+            <span class="project-tech-tag">FastAPI</span>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">PWA</span>
+            <span class="project-tag">ERP</span>
+            <span class="project-tag">Multi-Tenant</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Professional Training -->
+  <section id="training">
+    <div class="section-header reveal">
+      <div class="section-label">Foundation</div>
+      <h2 class="section-title">Professional Training</h2>
+      <p class="section-desc">Formal competency certification in accounting — the bedrock of my systems thinking.</p>
+    </div>
+
+    <div class="training-card reveal" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; max-width: 800px; margin: 0 auto;">
+      <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+        <div style="width: 56px; height: 56px; background: var(--badge-bg); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 28px;">📊</div>
+        <div>
+          <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 4px;">Akuntansi Dasar — 7 Unit Kompetensi</h3>
+          <p style="font-size: 14px; color: var(--text-muted);">Sertifikasi Kompetensi Profesional</p>
+        </div>
+        <div style="margin-left: auto; text-align: center;">
+          <div style="font-size: 32px; font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace;">7/7</div>
+          <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Lulus</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg-secondary); border-radius: 8px; border: 1px solid var(--border);">
+          <span style="color: var(--accent); font-weight: 700;">01</span>
+          <span style="font-size: 13px; color: var(--text-secondary);">Prinsip Praktik Profesional</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg-secondary); border-radius: 8px; border: 1px solid var(--border);">
+          <span style="color: var(--accent); font-weight: 700;">02</span>
+          <span style="font-size: 13px; color: var(--text-secondary);">Kesehatan & Keselamatan Kerja</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg-secondary); border-radius: 8px; border: 1px solid var(--border);">
+          <span style="color: var(--accent); font-weight: 700;">03</span>
+          <span style="font-size: 13px; color: var(--text-secondary);">Memproses Entry Jurnal</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg-secondary); border-radius: 8px; border: 1px solid var(--border);">
+          <span style="color: var(--accent); font-weight: 700;">04</span>
+          <span style="font-size: 13px; color: var(--text-secondary);">Memproses Buku Besar</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg-secondary); border-radius: 8px; border: 1px solid var(--border);">
+          <span style="color: var(--accent); font-weight: 700;">05</span>
+          <span style="font-size: 13px; color: var(--text-secondary);">Menyusun Laporan Keuangan</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg-secondary); border-radius: 8px; border: 1px solid var(--border);">
+          <span style="color: var(--accent); font-weight: 700;">06</span>
+          <span style="font-size: 13px; color: var(--text-secondary);">Pengolah Angka / Spreadsheet</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg-secondary); border-radius: 8px; border: 1px solid var(--border);">
+          <span style="color: var(--accent); font-weight: 700;">07</span>
+          <span style="font-size: 13px; color: var(--text-secondary);">Aplikasi Komputer Akuntansi</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications -->
+  <section id="certs">
+    <div class="section-header reveal">
+      <div class="section-label">Credentials</div>
+      <h2 class="section-title">Certifications</h2>
+      <p class="section-desc">12 verified credentials in data, analytics, and technology.</p>
+    </div>
+
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 14px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">Data Analysis & Visualization</h3>
+      <div class="certs-grid">
+        <div class="cert-card reveal">
+          <div class="cert-org">MySkill.id</div>
+          <div class="cert-title">Data Analysis Fundamental</div>
+          <div class="cert-date">15 Februari 2023</div>
+        </div>
+        <div class="cert-card reveal">
+          <div class="cert-org">MySkill.id</div>
+          <div class="cert-title">Skills and Tools in Data Analysis</div>
+          <div class="cert-date">15 Februari 2023</div>
+        </div>
+        <div class="cert-card reveal">
+          <div class="cert-org">MySkill.id</div>
+          <div class="cert-title">Statistics</div>
+          <div class="cert-date">18 Februari 2023</div>
+        </div>
+        <div class="cert-card reveal">
+          <div class="cert-org">MySkill.id</div>
+          <div class="cert-title">Basic of Data Visualization</div>
+          <div class="cert-date">3 Maret 2023</div>
+        </div>
+        <div class="cert-card reveal">
+          <div class="cert-org">MySkill.id</div>
+          <div class="cert-title">Data Visualization Practice</div>
+          <div class="cert-date">22 Februari 2023</div>
+        </div>
+        <div class="cert-card reveal">
+          <div class="cert-org">MySkill.id</div>
+          <div class="cert-title">Data Communication</div>
+          <div class="cert-date">3 Maret 2023</div>
+        </div>
+        <div class="cert-card reveal">
+          <div class="cert-org">MySkill.id</div>
+          <div class="cert-title">Cohort and Retention Analysis Practice</div>
+          <div class="cert-date">3 Maret 2023</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 14px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">Data Science</h3>
+      <div class="certs-grid">
+        <div class="cert-card reveal">
+          <div class="cert-org">MySkill.id</div>
+          <div class="cert-title">Data Science Introduction</div>
+          <div class="cert-date">7 Maret 2023</div>
+        </div>
+        <div class="cert-card reveal">
+          <div class="cert-org">DQLab</div>
+          <div class="cert-title">Introduction to Data Science with R</div>
+          <div class="cert-date">20 Februari 2023</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 14px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">Tools & Processing</h3>
+      <div class="certs-grid">
+        <div class="cert-card reveal">
+          <div class="cert-org">Kelas.Work</div>
+          <div class="cert-title">Mengolah Data dengan Mudah menggunakan Excel Power Query</div>
+          <div class="cert-date">21 Januari 2023</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="font-size: 14px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">Professional Development</h3>
+      <div class="certs-grid">
+        <div class="cert-card reveal">
+          <div class="cert-org">RevoU</div>
+          <div class="cert-title">Mini Course — 1 Week Certified Online Program</div>
+          <div class="cert-date">30 Desember 2022</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="section-header reveal">
+      <div class="section-label">Connect</div>
+      <h2 class="section-title">Let's Talk</h2>
+      <p class="section-desc">Open for collaboration, feedback, or just sharing war stories about coding on a phone.</p>
+    </div>
+
+    <div class="contact-box reveal">
+      <h3>Interested in working together?</h3>
+      <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
+      <div class="contact-links">
+        <a href="mailto:thery@example.com" class="contact-link">📧 Email</a>
+        <a href="https://github.com/thery" class="contact-link" target="_blank">🐙 GitHub</a>
+        <a href="https://linkedin.com/in/thery" class="contact-link" target="_blank">💼 LinkedIn</a>
+        <a href="https://t.me/thery" class="contact-link" target="_blank">✈️ Telegram</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Thery Vissabil Lillah — Built with <span class="heart">♥</span> from a mobile phone</p>
+  </footer>
+
+  <script>
+    const themeBtn = document.getElementById('themeBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+    const html = document.documentElement;
+
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const savedTheme = localStorage.getItem('theme');
+
+    function setTheme(theme) {
+      if (theme === 'light') {
+        html.setAttribute('data-theme', 'light');
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'Light';
+      } else {
+        html.removeAttribute('data-theme');
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'Dark';
+      }
+      localStorage.setItem('theme', theme);
+    }
+
+    if (savedTheme) { setTheme(savedTheme); }
+    else if (systemPrefersDark) { setTheme('dark'); }
+    else { setTheme('light'); }
+
+    function toggleTheme() {
+      const current = html.getAttribute('data-theme');
+      setTheme(current === 'light' ? 'dark' : 'light');
+    }
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('theme')) { setTheme(e.matches ? 'dark' : 'light'); }
+    });
+
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => { document.getElementById('navLinks').classList.remove('active'); });
+    });
+
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.style.boxShadow = window.scrollY > 50 ? '0 4px 20px var(--shadow)' : 'none';
+    });
+  </script>
+
+</body>
+</html>

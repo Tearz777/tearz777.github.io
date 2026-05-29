@@ -91,3 +91,140 @@ body, body * {
 img, svg, video {
   transition: none;
 }
+
+/* HERO TAGLINE — Glow & Pulse */
+
+.hero-tagline {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 20px;
+  margin-bottom: 8px;
+  opacity: 0.9;
+  text-align: center;
+  
+  /* Glow lebih kuat */
+  text-shadow: 
+    0 0 5px var(--accent),
+    0 0 10px var(--accent-glow),
+    0 0 20px var(--accent-glow),
+    0 0 40px var(--accent-glow);
+  
+  /* Fallback kalau animation nggak jalan */
+  -webkit-text-shadow: 
+    0 0 5px var(--accent),
+    0 0 10px var(--accent-glow),
+    0 0 20px var(--accent-glow),
+    0 0 40px var(--accent-glow);
+  
+  animation: taglinePulse 2s ease-in-out infinite;
+  -webkit-animation: taglinePulse 2s ease-in-out infinite;
+}
+
+@keyframes taglinePulse {
+  0%, 100% { 
+    opacity: 0.85; 
+    text-shadow: 
+      0 0 5px var(--accent),
+      0 0 10px var(--accent-glow),
+      0 0 20px var(--accent-glow);
+  }
+  50% { 
+    opacity: 1; 
+    text-shadow: 
+      0 0 10px var(--accent),
+      0 0 20px var(--accent-glow),
+      0 0 40px var(--accent-glow),
+      0 0 60px var(--accent-glow);
+  }
+}
+
+@-webkit-keyframes taglinePulse {
+  0%, 100% { 
+    opacity: 0.85; 
+    -webkit-text-shadow: 
+      0 0 5px var(--accent),
+      0 0 10px var(--accent-glow),
+      0 0 20px var(--accent-glow);
+  }
+  50% { 
+    opacity: 1; 
+    -webkit-text-shadow: 
+      0 0 10px var(--accent),
+      0 0 20px var(--accent-glow),
+      0 0 40px var(--accent-glow),
+      0 0 60px var(--accent-glow);
+  }
+}
+
+.hero-tagline::before {
+  content: '▸';
+  margin-right: 8px;
+  color: var(--accent);
+  opacity: 0.6;
+  text-shadow: 0 0 8px var(--accent-glow);
+  -webkit-text-shadow: 0 0 8px var(--accent-glow);
+}
+
+
+/* SCROLL TO TOP — Floating Button */
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: 
+    opacity 0.3s ease,
+    visibility 0.3s ease,
+    transform 0.3s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease;
+  z-index: 999;
+  backdrop-filter: blur(8px);
+}
+
+.scroll-to-top.visible {
+  opacity: 0.5;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+  opacity: 1;
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* Light mode adjustment */
+[data-theme="light"] .scroll-to-top {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .scroll-to-top.visible {
+  opacity: 0.6;
+}
+
+[data-theme="light"] .scroll-to-top:hover {
+  opacity: 1;
+  border-color: var(--accent);
+  color: var(--accent);
+}

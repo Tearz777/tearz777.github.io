@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
   initTheme();
 
+  // Language switcher
   const langButtons = document.querySelectorAll('.lang-btn');
   langButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Mobile menu
   const menuBtn = document.querySelector('.menu-btn');
   const navLinks = document.getElementById('navLinks');
   if (menuBtn && navLinks) {
@@ -29,23 +31,39 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
-});
 
-document.querySelectorAll('.timeline-item').forEach(item => {
-  item.addEventListener('click', () => {
-    document.querySelectorAll('.timeline-item').forEach(i => i.classList.remove('selected'));
-    item.classList.toggle('selected');
+  // Timeline select
+  document.querySelectorAll('.timeline-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.timeline-item').forEach(i => i.classList.remove('selected'));
+      item.classList.toggle('selected');
+    });
   });
-});
 
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    const target = document.querySelector(link.getAttribute('href'));
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
   });
-});
 
-console.log('main.js loaded');
+  // Floating scroll-to-top button
+  const scrollBtn = document.querySelector('.scroll-to-top');
+  if (scrollBtn) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 500) {
+        scrollBtn.classList.add('visible');
+      } else {
+        scrollBtn.classList.remove('visible');
+      }
+    });
+
+    scrollBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+});

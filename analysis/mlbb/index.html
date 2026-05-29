@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analisis Hero MLBB — Thery Vissabil Lillah</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    nav { position: sticky; top: 0; background: var(--bg-primary); border-bottom: 1px solid var(--border); z-index: 100; }
+    .nav-container { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; }
+    .nav-logo { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .nav-logo span { color: var(--accent); }
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+      font-size: 13px;
+      padding: 6px 14px;}
+    .nav-back:hover { border-color: var(--accent); color: var(--accent); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .theme-toggle { font-size: 13px; padding: 6px 14px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; color: var(--text-secondary); }
+    .hero {
+      background: radial-gradient(ellipse at top, rgba(239,68,68,0.08), transparent 60%);
+    }
+    .hero-bg {
+      background: radial-gradient(ellipse at 20% 50%, rgba(239,68,68,0.06) 0%, transparent 60%);
+    }
+    .pulse { background: #ef4444; }
+    .accent {
+      background: linear-gradient(to right, #fca5a5, #ef4444);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .section-label { color: #ef4444; }
+    .project-tech { color: #ef4444; background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.15); }
+    .timeline-dot { background: #ef4444; }
+    .case-tag { border-color: rgba(239,68,68,0.2); }
+    .btn-view { color: #ef4444; }
+    .btn-view:hover { border-color: #ef4444; }
+    .base-card.reveal {
+  max-width: 600px;
+  margin: 0 auto;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-container">
+      <a href="../../index.html" class="nav-logo">Thery<span>.</span></a>
+      <div class="nav-right">
+        <a href="../../index.html#analysis" class="nav-back btn-back" data-i18n="nav.back">← Kembali</a>
+        <button class="lang-toggle">EN</button>
+        <button class="theme-toggle" id="themeBtn">
+          <span class="theme-icon">☀️</span>
+          <span class="theme-text" data-i18n="theme.btn">Light</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="pulse"></span> Python · Pandas · Seaborn · Matplotlib
+      </div>
+      <h1 class="hero-title">
+        Hero Meta
+        <br>
+        <span class="accent">Mobile Legends</span>
+      </h1>
+      <p class="hero-subtitle" data-i18n="mlbb.subtitle">EDA · Esport Win Rate · Statistical Correlation</p>
+      <p class="hero-description" data-i18n="mlbb.description">
+        Eksplorasi dataset hero MLBB — distribusi role, lane, esport win rate, korelasi statistik, dan tren rilis hero dari tahun ke tahun.
+      </p>
+      <div class="case-meta" style="justify-content:center;">
+        <span class="case-tag">Python</span>
+        <span class="case-tag">Pandas</span>
+        <span class="case-tag">Seaborn</span>
+        <span class="case-tag">Matplotlib</span>
+      </div>
+    </div>
+  </section>
+  <!-- OVERVIEW -->
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label" data-i18n="mlbb.bg.label">Background</div>
+        <h2 class="section-title" data-i18n="mlbb.bg.title">Problem Statement</h2>
+      </div>
+
+      <div class="base-card reveal">
+        <p style="font-size:15px; line-height:1.8; color:var(--text-secondary); margin-bottom:1.5rem;" data-i18n="mlbb.bg.p1">
+          Di balik gameplay Mobile Legends yang terlihat random, sebenarnya ada pola yang bisa dibaca dari data — hero mana yang benar-benar dominan di esport, lane mana yang paling padat, dan apakah statistik dasar seperti HP berkorelasi dengan pertahanan fisik.
+        </p>
+        <p style="font-size:15px; line-height:1.8; color:var(--text-secondary);" data-i18n="mlbb.bg.p2">
+          Proyek ini mengeksplorasi <strong>dataset hero MLBB</strong> untuk membongkar distribusi role, performa esport, korelasi antar statistik, dan tren penambahan hero dari tahun ke tahun menggunakan pendekatan EDA murni.
+        </p>
+        <div class="case-stats" style="margin-top:2rem;">
+          <div class="case-stat">
+            <div class="case-stat-value">5</div>
+            <div class="case-stat-label" data-i18n="mlbb.bg.stat1">Analisis</div>
+          </div>
+          <div class="case-stat">
+            <div class="case-stat-value">50+</div>
+            <div class="case-stat-label" data-i18n="mlbb.bg.stat2">Min Games Filter</div>
+          </div>
+          <div class="case-stat">
+            <div class="case-stat-value">EDA</div>
+            <div class="case-stat-label" data-i18n="mlbb.bg.stat3">Approach</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ANALYSES -->
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label" data-i18n="mlbb.findings.label">Exploratory Data Analysis</div>
+        <h2 class="section-title" data-i18n="mlbb.findings.title">Key Findings</h2>
+      </div>
+      <div class="project-list">
+        <div class="project-item reveal">
+          <div class="project-meta-left">
+            <span class="project-tech" data-i18n="mlbb.findings.tag1">Analisis 1</span>
+          </div>
+          <div class="project-main">
+            <h3 class="project-name" data-i18n="mlbb.findings.name1">Distribusi Role Hero</h3>
+            <p class="project-info" data-i18n="mlbb.findings.desc1">Pemetaan jumlah hero per role — menunjukkan role mana yang paling banyak dikembangkan developer dan kemungkinan paling kompetitif di draft pick.</p>
+          </div>
+        </div>
+        <div class="project-item reveal">
+          <div class="project-meta-left">
+            <span class="project-tech" data-i18n="mlbb.findings.tag2">Analisis 2</span>
+          </div>
+          <div class="project-main">
+            <h3 class="project-name" data-i18n="mlbb.findings.name2">Top 10 Hero — Esport Win Rate</h3>
+            <p class="project-info" data-i18n="mlbb.findings.desc2">Difilter minimum 50 game untuk menghindari sample kecil yang menyesatkan. Hasilnya menunjukkan hero-hero yang konsisten dominan di level kompetitif, bukan sekadar hype sesaat.</p>
+          </div>
+        </div>
+        <div class="project-item reveal">
+          <div class="project-meta-left">
+            <span class="project-tech" data-i18n="mlbb.findings.tag3">Analisis 3</span>
+          </div>
+          <div class="project-main">
+            <h3 class="project-name" data-i18n="mlbb.findings.name3">Distribusi Lane</h3>
+            <p class="project-info" data-i18n="mlbb.findings.desc3">Pie chart distribusi lane memperlihatkan lane mana yang paling padat hero — relevan untuk memahami fleksibilitas draft dan kedalaman pilihan per posisi.</p>
+          </div>
+        </div>
+        <div class="project-item reveal">
+          <div class="project-meta-left">
+            <span class="project-tech" data-i18n="mlbb.findings.tag4">Analisis 4</span>
+          </div>
+          <div class="project-main">
+            <h3 class="project-name" data-i18n="mlbb.findings.name4">Korelasi HP vs Physical Defence</h3>
+            <p class="project-info" data-i18n="mlbb.findings.desc4">Scatter plot dengan regression line menguji apakah hero ber-HP tinggi otomatis punya pertahanan fisik tinggi. Hasilnya memberi gambaran desain hero tank vs fighter di MLBB.</p>
+          </div>
+        </div>
+        <div class="project-item reveal">
+          <div class="project-meta-left">
+            <span class="project-tech" data-i18n="mlbb.findings.tag5">Analisis 5</span>
+          </div>
+          <div class="project-main">
+            <h3 class="project-name" data-i18n="mlbb.findings.name5">Tren Rilis Hero per Tahun</h3>
+            <p class="project-info" data-i18n="mlbb.findings.desc5">Line chart jumlah hero baru per tahun — memperlihatkan seberapa agresif Moonton mengembangkan roster dan apakah ada perlambatan atau akselerasi di tahun-tahun tertentu.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- CTA -->
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label" data-i18n="mlbb.source.label">Source</div>
+        <h2 class="section-title" data-i18n="mlbb.source.title">Full Notebook</h2>
+        <p class="section-desc" data-i18n="mlbb.source.desc">Seluruh kode, output, dan proses analisis tersedia di GitHub.</p>
+      </div>
+      <div class="base-card reveal" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <p style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-muted);">
+            Tearz777 / data-analysis-portfolio
+          </p>
+          <p style="font-size:15px; font-weight:600; color:var(--text-primary); margin-top:4px;">
+            MLBB_Analysis.ipynb
+          </p>
+        </div>
+        <a href="https://github.com/Tearz777/data-analysis-portfolio/blob/main/mlbb/MLBB%20Analysis.ipynb"
+          target="_blank"
+          class="btn-case btn-view"
+          style="width:auto; padding:12px 24px;"
+          data-i18n="mlbb.source.btn">
+          📓 View on GitHub →
+        </a>
+      </div>
+    </div>
+  </section>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-container">
+      <p class="footer-copy" data-i18n="mlbb.footer.copy">&copy; 2026 Thery Vissabil Lillah · Data Analysis</p>
+      <div class="footer-controls">
+        <button class="lang-toggle">EN</button>
+        <button class="theme-toggle">
+          <span class="theme-icon">☀️</span>
+          <span class="theme-text" data-i18n="theme.btn">Light</span>
+        </button>
+      </div>
+    </div>
+  </footer>
+  
+  <script type="module">
+  import { initScrollReveal } from '../../assets/js/modules/scroll.js';
+  import { initTheme } from '../../assets/js/theme.js';
+  import '../../assets/js/lang.js';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initScrollReveal();
+    initTheme();
+  });
+</script>
+</body>
+</html>

@@ -24,6 +24,17 @@
       --badge-bg: rgba(16, 185, 129, 0.1);
       --badge-text: #34d399;
     }
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #f1f5f9;
+      --bg-card: #ffffff;
+      --bg-terminal: #f1f5f9;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --border: #e2e8f0;
+      --border-hover: #cbd5e1;
+    }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -300,6 +311,20 @@
     }
     footer a { color: var(--accent); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
+    
+    nav { position: sticky; top: 0; z-index: 100; background: var(--bg-primary); border-bottom: 1px solid var(--border); }
+    .nav-container { display: flex; align-items: stretch; justify-content: space-between; max-width: 1000px; margin: 0 auto; padding: 12px 24px; min-height: 70px; }
+    .nav-left { display: flex; flex-direction: column; justify-content: center; gap: 2px; }
+    .nav-logo { font-size: 20px; font-weight: 800; }
+    .nav-logo span { color: var(--accent); }
+    .nav-breadcrumb { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+    .nav-breadcrumb .sep { color: var(--border-hover); }
+    .nav-breadcrumb .current { color: var(--accent); }
+    .nav-right { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 4px; }
+    .nav-right > div { width: 100%; }
+    .theme-toggle { display: flex; align-items: center; gap: 6px; font-size: 13px; background: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; cursor: pointer; width: 100%; justify-content: center; }    .nav-back { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-muted); border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; transition: all 0.2s; }
+    .nav-back:hover { border-color: var(--accent); color: var(--accent); }
+    .lang-toggle { font-size: 12px; font-weight: 700; background: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border); padding: 6px 10px; border-radius: 6px; cursor: pointer; }
 
     @media (max-width: 768px) {
       .hero { padding: 40px 20px 30px; }
@@ -311,21 +336,42 @@
   </style>
 </head>
 <body>
-
-  <section class="hero">
-    <div class="hero-badge">⚙️ CLI Tool</div>
-    <h1>Data<span class="gradient">Craft</span></h1>
-    <p class="hero-desc">
-      Python CLI tool for data cleaning, merging, and profiling. 
-      Multi-format support with interactive workflows. 
-      Built for repetitive data tasks — from the terminal.
-    </p>
-    <div class="hero-cta">
-      <a href="https://github.com/Tearz777/datacraft" class="btn btn-primary" target="_blank">🐙 View Source Code</a>
-      <a href="../" class="btn btn-secondary">← Back to Portfolio</a>
+  
+  <nav>
+    <div class="nav-container">
+      <div class="nav-left">
+        <a href="../../index.html" class="nav-logo">Thery<span>.</span></a>
+        <div class="nav-breadcrumb">
+          projects <span class="sep">/</span> <span class="current">datacraft</span>
+        </div>
+      </div>
+      <div class="nav-right">
+        <div style="display:flex; gap:8px; align-items:center;">
+            <a href="../../index.html#projects" class="nav-back" data-i18n="nav.back">← Kembali</a>
+            <button class="lang-toggle" id="langToggleBtn">EN</button>
+        </div>
+        <button class="theme-toggle" id="themeBtn">
+          <span class="theme-icon">☀️</span>
+          <span class="theme-text" data-i18n="theme.btn">Light</span>
+        </button>
+      </div>
     </div>
+  </nav>
+  
+  <section class="hero">
+    <div class="hero-badge" data-i18n="datacraft.hero.badge">⚙️ CLI Tool</div>
+      <h1>Data<span class="gradient">Craft</span></h1>
+      <p class="hero-desc" data-i18n="datacraft.hero.desc">
+          Python CLI tool for data cleaning, merging, and profiling. 
+          Multi-format support with interactive workflows. 
+          Built for repetitive data tasks — from the terminal.
+      </p>
+      <div class="hero-cta">
+        <a href="https://github.com/Tearz777/datacraft" class="btn btn-primary" target="_blank" data-i18n="datacraft.hero.btn.github">🐙 View Source Code</a>
+        <a href="../../" class="btn btn-secondary" data-i18n="datacraft.hero.btn.back">← Back to Portfolio</a>
+      </div>
   </section>
-
+  
   <!-- Terminal Preview -->
   <section class="terminal-section">
     <div class="terminal-window">
@@ -336,7 +382,7 @@
         <div class="terminal-title">datacraft — v2.5</div>
       </div>
       <div class="terminal-body">
-        <img src="Screenshot_Main.jpg" alt="DataCraft Main Menu" onerror="this.style.display='none'">
+        <img src="screenshot/Screenshot_Main.jpg" alt="DataCraft Main Menu" onerror="this.style.display='none'">
         <div style="margin-top: 16px;">
           <span class="terminal-prompt">$</span> python dc_v2.5.py
           <span class="terminal-cursor"></span>
@@ -347,79 +393,79 @@
 
   <!-- Features -->
   <section class="features">
-    <h2 class="section-title">Core Features</h2>
-    <div class="feature-grid">
-      <div class="feature-card">
-        <div class="feature-icon">📁</div>
-        <div class="feature-title">Multi-Format Load</div>
-        <div class="feature-desc">CSV, JSON, GeoJSON, Excel, TSV, JSONL, Parquet — all in one tool.</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔍</div>
-        <div class="feature-title">Auto Detect</div>
-        <div class="feature-desc">Automatic pattern detection for format inconsistencies across files.</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🧹</div>
-        <div class="feature-title">Data Cleaning</div>
-        <div class="feature-desc">Transformasi berbasis pattern dengan preview before & after changes.</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🏷️</div>
-        <div class="feature-title">Bulk Rename</div>
-        <div class="feature-desc">Rename kolom dengan referensi antar file. Bulk operation support.</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔗</div>
-        <div class="feature-title">Merge Multi-File</div>
-        <div class="feature-desc">Sequential merge "(1 + 2) + 3" dengan outer join support.</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📤</div>
-        <div class="feature-title">Multi-Format Output</div>
-        <div class="feature-desc">Export ke CSV, TSV, JSON, JSONL, XLSX, GeoJSON, Parquet.</div>
-      </div>
+  <h2 class="section-title" data-i18n="datacraft.features.title">Core Features</h2>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📁</div>
+      <div class="feature-title" data-i18n="datacraft.features.load.title">Multi-Format Load</div>
+      <div class="feature-desc" data-i18n="datacraft.features.load.desc">CSV, JSON, GeoJSON, Excel, TSV, JSONL, Parquet — all in one tool.</div>
     </div>
-  </section>
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <div class="feature-title" data-i18n="datacraft.features.detect.title">Auto Detect</div>
+      <div class="feature-desc" data-i18n="datacraft.features.detect.desc">Automatic pattern detection for format inconsistencies across files.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧹</div>
+      <div class="feature-title" data-i18n="datacraft.features.clean.title">Data Cleaning</div>
+      <div class="feature-desc" data-i18n="datacraft.features.clean.desc">Transformasi berbasis pattern dengan preview before & after changes.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏷️</div>
+      <div class="feature-title" data-i18n="datacraft.features.rename.title">Bulk Rename</div>
+      <div class="feature-desc" data-i18n="datacraft.features.rename.desc">Rename kolom dengan referensi antar file. Bulk operation support.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔗</div>
+      <div class="feature-title" data-i18n="datacraft.features.merge.title">Merge Multi-File</div>
+      <div class="feature-desc" data-i18n="datacraft.features.merge.desc">Sequential merge "(1 + 2) + 3" dengan outer join support.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📤</div>
+      <div class="feature-title" data-i18n="datacraft.features.output.title">Multi-Format Output</div>
+      <div class="feature-desc" data-i18n="datacraft.features.output.desc">Export ke CSV, TSV, JSON, JSONL, XLSX, GeoJSON, Parquet.</div>
+    </div>
+  </div>
+</section>
 
   <!-- Modes -->
   <section class="modes">
-    <h2 class="section-title">Two Modes</h2>
-    <div class="mode-grid">
-      <div class="mode-card power">
-        <div class="mode-icon">⚡</div>
-        <div class="mode-title">Power Mode</div>
-        <div class="mode-desc">Full control over every step. Advanced options, custom transformations, and Parquet output support. For power users who know exactly what they need.</div>
-        <span class="mode-status status-beta">Available (Beta)</span>
-      </div>
-      <div class="mode-card">
-        <div class="mode-icon">🚀</div>
-        <div class="mode-title">Basic Mode</div>
-        <div class="mode-desc">Guided workflow with minimal input. Quick cleaning and merge for common scenarios. Get results fast without complex configuration.</div>
-        <span class="mode-status status-ready">Ready</span>
-      </div>
+  <h2 class="section-title" data-i18n="datacraft.modes.title">Two Modes</h2>
+  <div class="mode-grid">
+    <div class="mode-card power">
+      <div class="mode-icon">⚡</div>
+      <div class="mode-title" data-i18n="datacraft.modes.power.title">Power Mode</div>
+      <div class="mode-desc" data-i18n="datacraft.modes.power.desc">Full control over every step. Advanced options, custom transformations, and Parquet output support. For power users who know exactly what they need.</div>
+      <span class="mode-status status-beta" data-i18n="datacraft.modes.power.status">Available (Beta)</span>
     </div>
-  </section>
+    <div class="mode-card">
+      <div class="mode-icon">🚀</div>
+      <div class="mode-title" data-i18n="datacraft.modes.basic.title">Basic Mode</div>
+      <div class="mode-desc" data-i18n="datacraft.modes.basic.desc">Guided workflow with minimal input. Quick cleaning and merge for common scenarios. Get results fast without complex configuration.</div>
+      <span class="mode-status status-ready" data-i18n="datacraft.modes.basic.status">Ready</span>
+    </div>
+  </div>
+</section>
 
   <!-- Tech Stack -->
   <section class="tech">
-    <h2 class="section-title">Tech Stack</h2>
-    <p style="color: var(--text-secondary); font-size: 15px;">Built entirely from a mobile phone via Termux</p>
-    <div class="tech-tags">
-      <span class="tech-tag">Python 3.13</span>
-      <span class="tech-tag">Pandas</span>
-      <span class="tech-tag">OpenPyXL</span>
-      <span class="tech-tag">PyArrow</span>
-      <span class="tech-tag">Tab Autocomplete</span>
-      <span class="tech-tag">Linux/Termux</span>
-    </div>
-  </section>
+  <h2 class="section-title" data-i18n="datacraft.tech.title">Tech Stack</h2>
+  <p style="color: var(--text-secondary); font-size: 15px;" data-i18n="datacraft.tech.desc">Built entirely from a mobile phone via Termux</p>
+  <div class="tech-tags">
+    <span class="tech-tag">Python 3.13</span>
+    <span class="tech-tag">Pandas</span>
+    <span class="tech-tag">OpenPyXL</span>
+    <span class="tech-tag">PyArrow</span>
+    <span class="tech-tag">Tab Autocomplete</span>
+    <span class="tech-tag">Linux/Termux</span>
+  </div>
+</section>
 
   <!-- Exit Screen -->
   <section class="exit-section">
     <h2 class="section-title">Built With Care</h2>
     <div class="exit-card">
-      <img src="screenshots/02-exit.png" alt="DataCraft Exit Screen" onerror="this.style.display='none'">
+      <img src="screenshot/02-exit.png" alt="DataCraft Exit Screen" onerror="this.style.display='none'">
       <div class="exit-text">
         <span class="highlight">$</span> Created by <span class="highlight">Thery Vissabil Lillah</span><br>
         <span class="highlight">$</span> Built on <span class="highlight">Android Termux</span><br>
@@ -428,10 +474,11 @@
     </div>
   </section>
 
-  <footer>
-    <p>© 2026 DataCraft — Built by <a href="https://tearz777.github.io">Thery Vissabil Lillah</a></p>
-    <p style="margin-top: 8px; font-size: 12px;">Coded on Android via Termux • AI-assisted development</p>
-  </footer>
-
+<footer>
+  <p data-i18n="datacraft.footer.copy">© 2026 DataCraft — Built by <a href="https://tearz777.github.io">Thery Vissabil Lillah</a></p>
+  <p style="margin-top: 8px; font-size: 12px;" data-i18n="datacraft.footer.sub">Coded on Android via Termux • AI-assisted development</p>
+</footer>
+<script type="module" src="../../assets/js/main.js"></script>
+<script type="module" src="../../assets/js/lang.js"></script>
 </body>
 </html>

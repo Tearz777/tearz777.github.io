@@ -1,0 +1,366 @@
+@import url('../../assets/css/core/variables.css');
+
+:root {
+  --senat-gold: #c9a84c;
+  --senat-gold-dim: #a07830;
+  --senat-border: rgba(201, 168, 76, 0.2);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ============================================================
+   NAV — ikut struktur main index
+   ============================================================ */
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--senat-border);
+  backdrop-filter: blur(10px);
+}
+
+.nav-container {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  min-height: 70px;
+}
+
+.nav-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+.nav-logo {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.nav-logo span {
+  color: var(--senat-gold);
+}
+
+.nav-breadcrumb {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-breadcrumb .sep {
+  color: var(--border-hover);
+}
+
+.nav-breadcrumb .current {
+  color: var(--senat-gold);
+}
+
+.nav-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+}
+
+.nav-right > div {
+  width: 100%;
+}
+
+.nav-back {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.nav-back:hover {
+  border-color: var(--senat-gold);
+  color: var(--senat-gold);
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  justify-content: center;
+  font-family: inherit;
+}
+
+.lang-toggle {
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+
+.senat-hero {
+  padding: 3rem 0 2rem;
+  border-bottom: 1px solid var(--senat-border);
+}
+
+.senat-badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--senat-gold);
+  background: rgba(201, 168, 76, 0.08);
+  border: 1px solid var(--senat-border);
+  padding: 5px 14px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.senat-title {
+  font-size: clamp(28px, 6vw, 52px);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1.05;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.senat-tagline {
+  font-size: 15px;
+  color: var(--text-secondary);
+  max-width: 580px;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.senat-cta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #c9a84c, #a07830);
+  color: #0a0f1e;
+  font-weight: 700;
+  font-size: 13px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-family: var(--font-mono);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  border-color: var(--senat-gold);
+  color: var(--senat-gold);
+}
+
+/* ============================================================
+   DESKRIPSI & STATUS
+   ============================================================ */
+
+.senat-desc {
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--senat-border);
+}
+
+.senat-desc-text {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+  max-width: 680px;
+  margin-bottom: 2rem;
+}
+
+.senat-status-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--senat-border);
+  border-left: 3px solid var(--senat-gold);
+  border-radius: 6px;
+  background-color: var(--bg-card);
+  max-width: 680px;
+}
+
+.senat-status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background-color: rgba(201, 168, 76, 0.15);
+  border: 1px solid var(--senat-gold-dim);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--senat-gold);
+  letter-spacing: 0.08em;
+  width: fit-content;
+}
+
+.senat-status-text {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   CARD PERSPEKTIF
+   ============================================================ */
+
+.senat-perspectives {
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--senat-border);
+}
+
+.senat-section-title {
+  font-size: 1.1rem;
+  font-family: var(--font-mono);
+  color: var(--senat-gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.perspectives-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.perspective-card {
+  padding: 1.5rem;
+  border: 1px solid var(--senat-border);
+  border-radius: 8px;
+  background-color: var(--bg-card);
+  transition: border-color 0.2s ease;
+}
+
+.perspective-card:hover {
+  border-color: var(--senat-gold-dim);
+}
+
+.perspective-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.perspective-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.perspective-desc {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.footer {
+  padding: 2rem 0;
+  border-top: 1px solid var(--senat-border);
+}
+
+.footer-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.footer-text a {
+  color: var(--senat-gold);
+  text-decoration: none;
+}
+
+.footer-text a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 600px) {
+  .senat-title { font-size: 2rem; }
+  .senat-cta { flex-direction: column; }
+  .btn-primary,
+  .btn-secondary { width: 100%; justify-content: center; }
+  .perspectives-grid { grid-template-columns: 1fr 1fr; }
+  .perspective-card { padding: 1rem; }
+}
+
+@media (max-width: 380px) {
+  .perspectives-grid { grid-template-columns: 1fr; }
+}

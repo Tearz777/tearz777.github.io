@@ -215,7 +215,8 @@ button:disabled {
   border-radius: 10px;
   background: var(--card-bg);
   border: 1px solid var(--text); 
-  opacity: 0.2;
+  opacity: 0;
+  display: none;
   font-weight: 500;
   color: var(--card-text);
 }
@@ -294,15 +295,14 @@ button:disabled {
 
   </style>
 </head>
-
 <body>
     
 <div id="opening" style="display:none;">
-  <img src="opening.gif" id="openingGif">
+  <img src="img/opening.gif">
 </div>
 
 <div id="closing" style="display:none;">
-  <img src="closing.gif">
+  <img src="img/closing.gif">
 </div>
  
 <div class="topbar">
@@ -324,10 +324,11 @@ button:disabled {
 </div>
   <button id="btn-run" onclick="run()">Buka Sidang</button>
   <button id="btn-summary" onclick="tarikKesimpulan()" style="display:none;">
-  Tarik Kesimpulan
+      Tarik Kesimpulan
   </button>
 
   <div id="senat"></div>
+  <div id="summary"></div>
 
 </div>
 
@@ -403,12 +404,12 @@ async function run() {
     
     setTimeout(() => {
         opening.classList.add("flash");
-    }, 700);
+    }, 1500);
 
     // fade animasi
     setTimeout(() => {
       opening.classList.add("fade-out");
-    }, 600);
+    }, 2800);
 
     // selesai animasi
     setTimeout(() => {
@@ -422,7 +423,7 @@ async function run() {
 
       btn.innerText = "Diskusikan";
       btn.disabled = false;
-    }, 900);
+    }, 3300);
 
   }, 500);
 
@@ -592,8 +593,14 @@ async function tarikKesimpulan() {
 
   // STEP 3: fade keluar setelah animasi
   setTimeout(() => {
-    closing.classList.add("fade-out");
-  }, 800); // sesuaikan durasi GIF
+  closing.classList.add("fade-out");
+}, 3300);
+  setTimeout(() => {
+    closing.style.display = "none";
+    closing.classList.remove("fade-out");
+    summaryDiv.style.display = "block";
+    summaryDiv.innerText = hasil;
+  }, 3800);
 
   // STEP 4: ambil kesimpulan sambil animasi jalan
   const context = history.join("\n");
@@ -631,10 +638,12 @@ Buat kesimpulan final yang tegas dan membantu pengambilan keputusan.
     closing.style.display = "none";
     closing.classList.remove("fade-out");
 
+    summaryDiv.style.display = "block";
     summaryDiv.innerText = hasil;
-    summaryDiv.setAttribute("contenteditable", "false");
   }, 1200);
 }
+
+summaryDiv.style.display = "block";
 
 </script>
 

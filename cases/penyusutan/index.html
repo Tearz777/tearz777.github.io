@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Penyusutan Aktiva Tetap — DeprEx · Thery.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+  :root {
+    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --bg-primary: #0a0e1a;
+    --bg-secondary: #111827;
+    --bg-card: #1a2332;
+    --bg-card-hover: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --accent: #f59e0b;
+    --accent-glow: rgba(245,158,11,0.3);
+    --badge-bg: rgba(245,158,11,0.1);
+    --badge-text: #fbbf24;
+    --border: #1e293b;
+    --border-hover: #334155;
+    --shadow: rgba(0,0,0,0.4);
+    --gradient-start: #f59e0b;
+    --gradient-end: #ef4444;
+  }
+  [data-theme="light"] {
+    --bg-primary: #f8fafc; --bg-secondary: #f1f5f9; --bg-card: #ffffff;
+    --bg-card-hover: #f8fafc; --text-primary: #0f172a; --text-secondary: #475569;
+    --text-muted: #94a3b8; --accent: #0891b2; --accent-glow: rgba(8,145,178,0.15);
+    --border: #e2e8f0; --border-hover: #cbd5e1; --badge-bg: rgba(8,145,178,0.1);
+    --badge-text: #0e7490; --shadow: rgba(0,0,0,0.08);
+    --gradient-start: #0891b2; --gradient-end: #2563eb;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { overflow-x: hidden; }
+  body { 
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 100%;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+  }
+  .nav-container {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1100px; margin: 0 auto;
+    padding: 0 24px; height: 60px;
+  }
+  .nav-logo { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+  .nav-logo span { color: var(--accent); }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-size: 12px;
+    color: var(--text-muted); border: 1px solid var(--border);
+    padding: 6px 12px; border-radius: 6px; transition: all 0.2s;
+  }
+  .nav-back:hover { border-color: var(--accent); color: var(--accent); }
+  .theme-toggle, .lang-toggle {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--bg-secondary); border: 1px solid var(--border);
+    color: var(--text-secondary); font-size: 13px; cursor: pointer;
+    padding: 6px 12px; border-radius: 6px; transition: all 0.2s;
+    font-family: var(--font-mono);
+  }
+  .theme-toggle:hover, .lang-toggle:hover {
+    border-color: var(--border-hover); color: var(--text-primary);
+  }
+
+  /* HERO */
+  .case-hero {
+    max-width: 1100px; margin: 0 auto;
+    padding: 48px 24px 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  .breadcrumb {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--text-muted); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .breadcrumb span { color: var(--accent); }
+  .case-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--badge-text); background: var(--badge-bg);
+    border: 1px solid rgba(6,182,212,0.2);
+    padding: 5px 14px; border-radius: 50px; margin-bottom: 20px;
+  }
+  .case-hero h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 800; letter-spacing: -1.5px;
+    line-height: 1.1; margin-bottom: 16px;
+  }
+  .gradient {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .case-hero p {
+    font-size: 15px; color: var(--text-secondary);
+    max-width: 620px; width: 100%;
+    line-height: 1.7; margin-bottom: 32px;
+  }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+  .tag {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--text-secondary); background: var(--bg-secondary);
+    border: 1px solid var(--border); padding: 3px 10px; border-radius: 4px;
+  }
+  .hero-stats { display: flex; flex-wrap: wrap; gap: 32px; }
+  .hstat { display: flex; flex-direction: column; gap: 2px; }
+  .hstat-val {
+    font-family: var(--font-mono); font-size: 22px; font-weight: 700;
+    color: var(--text-primary);
+  }
+  .hstat-label {
+    font-size: 11px; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+
+  /* LAYOUT */
+  .case-body {
+    max-width: 1100px; margin: 0 auto;
+    padding: 48px 24px 80px;
+    display: grid; grid-template-columns: 1fr 320px; gap: 40px;
+  }
+
+  /* SECTIONS */
+  .section-block { margin-bottom: 48px; }
+  .block-label {
+    font-family: var(--font-mono); font-size: 10px;
+    text-transform: uppercase; letter-spacing: 2px;
+    color: var(--accent); margin-bottom: 12px;
+  }
+  .block-title {
+    font-size: 20px; font-weight: 700;
+    color: var(--text-primary); margin-bottom: 16px; letter-spacing: -0.3px;
+  }
+  .block-text {
+    font-size: 14px; color: var(--text-secondary);
+    line-height: 1.8; word-break: break-word;
+  }
+
+  /* METHOD FLOW */
+  .method-flow {overflow: hidden; display: flex; flex-direction: column; margin-top: 16px; }
+  .method-step {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 16px 0; border-bottom: 1px solid var(--border);
+  }
+  .method-step:last-child { border-bottom: none; }
+  .step-code {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+    color: var(--accent); background: var(--badge-bg);
+    border: 1px solid rgba(6,182,212,0.2);
+    padding: 4px 8px; border-radius: 4px;
+    flex-shrink: 0; margin-top: 2px; letter-spacing: 1px;
+  }
+  .step-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .step-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; word-break: break-word; }
+  .step-formula {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--accent); background: var(--bg-secondary);
+    border: 1px solid var(--border); border-left: 2px solid var(--accent);
+    padding: 6px 10px; border-radius: 4px; margin-top: 8px;
+    display: block; word-break: break-word; white-space: normal;
+  }
+  .step-formula {
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+  /* TABLE */
+  .ledger-wrap {
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    border-radius: 10px; border: 1px solid var(--border); margin-top: 16px;
+  }
+  thead tr { background: var(--bg-secondary); }
+  thead th {
+    padding: 10px 14px; text-align: left;
+    color: var(--text-muted); font-weight: 600;
+    text-transform: uppercase; font-size: 10px; letter-spacing: 1px;
+    border-bottom: 1px solid var(--border);
+  }
+  thead th.num { text-align: right; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--bg-card-hover); }
+  tbody td { padding: 10px 14px; color: var(--text-secondary); }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody td.label { color: var(--text-primary); font-weight: 600; }
+  tbody td.green { color: #34d399; }
+  tbody td.amber { color: #fbbf24; }
+  tbody td.red { color: #f87171; }
+  .tfoot-row td {
+    padding: 10px 14px; border-top: 1px solid var(--border);
+    font-weight: 700; color: var(--text-primary); background: var(--bg-secondary);
+  }
+  table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 12px; min-width: 560px; }  
+
+  /* METHOD CARD GRID */
+  .method-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-top: 16px;
+  }
+  .method-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px;
+  }
+  .method-card-code {
+    font-size: 10px; color: var(--accent); font-family: var(--font-mono);
+    letter-spacing: 1px; margin-bottom: 6px;
+  }
+  .method-card-name { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+  .method-card-desc { font-size: 11px; color: var(--text-muted); line-height: 1.6; }
+
+  /* SYM BADGES */
+  .table-label {
+    font-family: var(--font-mono); font-size: 10px;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--text-muted); margin-bottom: 8px; margin-top: 20px;
+  }
+  .badge-true-up {
+    display: inline-block; font-family: var(--font-mono); font-size: 10px;
+    color: #34d399; background: rgba(52,211,153,0.1);
+    border: 1px solid rgba(52,211,153,0.3);
+    padding: 2px 8px; border-radius: 4px; margin-left: 6px;
+  }
+  .badge-fyf {
+    display: inline-block; font-family: var(--font-mono); font-size: 10px;
+    color: #fbbf24; background: rgba(251,191,36,0.1);
+    border: 1px solid rgba(251,191,36,0.3);
+    padding: 2px 8px; border-radius: 4px; margin-left: 6px;
+  }
+  .diff-note {
+    font-size: 12px; color: var(--text-muted); line-height: 1.7;
+    margin-top: 12px; padding: 12px 14px;
+    background: var(--bg-secondary); border: 1px solid var(--border);
+    border-left: 2px solid var(--accent); border-radius: 6px;
+    word-break: break-word;
+  }
+
+  /* SIDEBAR */
+  .sidebar { display: flex; flex-direction: column; gap: 20px; }
+  .sidebar-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px;
+  }
+  .sidebar-title {
+    font-family: var(--font-mono); font-size: 10px;
+    text-transform: uppercase; letter-spacing: 2px;
+    color: var(--accent); margin-bottom: 16px;
+  }
+  .meta-row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 12px;
+  }
+  .meta-row:last-child { border-bottom: none; }
+  .meta-key { color: var(--text-muted); }
+  .meta-val { color: var(--text-primary); font-weight: 600; text-align: right; max-width: 140px; }
+  .download-btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; padding: 12px;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: #000; font-size: 13px; font-weight: 700;
+    border-radius: 8px; border: none; cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+    font-family: var(--font-mono);
+  }
+  .download-btn:hover { opacity: 0.85; transform: translateY(-2px); }
+  .skill-list { display: flex; flex-direction: column; gap: 8px; }
+  .skill-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--text-secondary);
+  }
+  .skill-item::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--accent); border-radius: 50%; flex-shrink: 0;
+  }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.active { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .case-body { grid-template-columns: 1fr; padding: 32px 16px 60px; }
+    .case-hero { padding: 32px 16px 24px; }
+    .nav-container { padding: 0 16px; }
+    .hero-stats { gap: 16px; }
+    .method-step { flex-direction: column; }
+    .method-grid { grid-template-columns: 1fr; }
+    .meta-row { flex-direction: column; gap: 4px; }
+    .meta-val { max-width: 100%; text-align: left; }
+    table { font-size: 10px; }
+    thead th, tbody td { padding: 7px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-container">
+    <a href="../../index.html" class="nav-logo">Thery<span>.</span></a>
+    <div class="nav-right">
+      <a href="../../index.html#cases" class="nav-back" data-i18n="nav.back">← Kembali</a>
+      <button class="lang-toggle">EN</button>
+      <button class="theme-toggle" id="themeBtn">
+        <span class="mode-icon-dark">🌙</span>
+        <span class="mode-icon-light" style="display:none">☀️</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="case-hero">
+  <div class="breadcrumb reveal">cases <span>/</span> penyusutan</div>
+  <div class="case-badge reveal" data-i18n="penyusutan.hero.badge">📉 FIXED ASSET DEPRECIATION</div>
+  <h1 class="reveal" data-i18n="penyusutan.hero.title">Penyusutan Aktiva Tetap<br><span class="gradient">5 Metode</span></h1>
+  <p class="reveal" data-i18n="penyusutan.hero.desc">
+    Cheat sheet penyusutan aktiva tetap berbasis Google Spreadsheets yang mengotomatisasi perhitungan SLM, DBM, DDM, UPM, dan SYM — lengkap dengan pro-rata hari, perbandingan True Up vs Full Year Fraction, sesuai PSAK yang berlaku di Indonesia.
+  </p>
+  <div class="hero-tags reveal">
+    <span class="tag">SLM</span>
+    <span class="tag">DBM</span>
+    <span class="tag">DDM</span>
+    <span class="tag">UPM</span>
+    <span class="tag">SYM</span>
+    <span class="tag">PSAK Compliance</span>
+    <span class="tag">Google Spreadsheets</span>
+    <span class="tag">Pro-Rata Days</span>
+  </div>
+  <div class="hero-stats reveal">
+    <div class="hstat"><span class="hstat-val">5</span><span class="hstat-label" data-i18n="penyusutan.hero.stat1">Metode Penyusutan</span></div>
+    <div class="hstat"><span class="hstat-val">Auto</span><span class="hstat-label" data-i18n="penyusutan.hero.stat2">Kalkulasi Rumus</span></div>
+    <div class="hstat"><span class="hstat-val">2x</span><span class="hstat-label" data-i18n="penyusutan.hero.stat3">Varian SYM</span></div>
+    <div class="hstat"><span class="hstat-val">PSAK</span><span class="hstat-label" data-i18n="penyusutan.hero.stat4">Compliant</span></div>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="case-body">
+  <main>
+
+    <!-- 5 METODE -->
+    <div class="section-block reveal">
+      <div class="block-label" data-i18n="penyusutan.framework.label">Kerangka Kerja</div>
+      <div class="block-title" data-i18n="penyusutan.framework.title">5 Metode Penyusutan</div>
+      <p class="block-text" data-i18n="penyusutan.framework.text">DeprEx mencakup lima metode penyusutan yang diakui dalam PSAK, masing-masing dengan karakteristik dan kasus penggunaan berbeda. Semua metode mendukung pro-rata berbasis jumlah hari riil penggunaan aset.</p>
+      <div class="method-flow">
+        <div class="method-step">
+          <div class="step-code">SLM</div>
+          <div class="step-content">
+            <div class="step-title" data-i18n="penyusutan.slm.title">Straight Line Method — Metode Garis Lurus</div>
+            <div class="step-desc" data-i18n="penyusutan.slm.desc">Beban penyusutan konstan setiap periode. Paling sederhana dan paling umum digunakan. Cocok untuk aset yang manfaatnya terdistribusi merata sepanjang umur ekonomis.</div>
+            <div class="step-formula" data-i18n="penyusutan.slm.formula">(Nilai Perolehan − Nilai Sisa) ÷ Umur Ekonomis</div>
+          </div>
+        </div>
+        <div class="method-step">
+          <div class="step-code">DBM</div>
+            <div class="step-content">
+              <div class="step-title" data-i18n="penyusutan.dbm.title">Declining Balance Method — Metode Saldo Menurun</div>
+              <div class="step-desc" data-i18n="penyusutan.dbm.desc">Beban penyusutan dihitung dari nilai buku aset yang terus menurun, dikalikan tingkat penyusutan tetap. Menghasilkan beban lebih besar di awal, lebih kecil di akhir umur aset.</div>
+              <div class="step-formula" data-i18n="penyusutan.dbm.formula">Nilai Buku × Tingkat Penyusutan</div>
+            </div>
+        </div>
+        <div class="method-step">
+          <div class="step-code">DDM</div>
+          <div class="step-content">
+            <div class="step-title" data-i18n="penyusutan.ddm.title">Double Declining Method — Metode Saldo Menurun Ganda</div>
+            <div class="step-desc" data-i18n="penyusutan.ddm.desc">Versi akselerasi dari DBM dengan tingkat penyusutan dua kali lipat tarif SLM. Cocok untuk aset teknologi atau kendaraan yang depresiasi nilai pasarnya cepat di tahun-tahun awal.</div>
+            <div class="step-formula" data-i18n="penyusutan.ddm.formula">Nilai Buku × (2 ÷ Umur Ekonomis)</div>
+          </div>
+        </div>
+
+      <div class="method-step">
+        <div class="step-code">UPM</div>
+          <div class="step-content">
+            <div class="step-title" data-i18n="penyusutan.upm.title">Unit Produced Method — Metode Produksi Unit</div>
+            <div class="step-desc" data-i18n="penyusutan.upm.desc">Penyusutan proporsional terhadap output aktual, bukan waktu. Ideal untuk mesin produksi atau peralatan tambang yang aus berdasarkan penggunaan, bukan usia kalender.</div>
+            <div class="step-formula" data-i18n="penyusutan.upm.formula">(Nilai Perolehan − Nilai Sisa) ÷ Kapasitas × Produksi Tahun Ini</div>
+          </div>
+        </div>
+
+      <div class="method-step">
+      <div class="step-code">SYM</div>
+      <div class="step-content">
+        <div class="step-title" data-i18n="penyusutan.sym.title">Sum of Year Digit Method — Metode Jumlah Angka Tahun</div>
+        <div class="step-desc" data-i18n="penyusutan.sym.desc">Beban penyusutan menurun setiap tahun berdasarkan pecahan yang dihitung dari jumlah digit tahun umur ekonomis. Hadir dalam dua varian: True Up dan Full Year Fraction — dengan perlakuan berbeda untuk tahun pertama tidak penuh.</div>
+        <div class="step-formula" data-i18n="penyusutan.sym.formula">Denominator = Sisa Umur ÷ Jumlah Angka Tahun</div>
+      </div>
+      </div>
+
+    </div>
+  </div>
+
+    <!-- SYM COMPARISON -->
+    <div class="section-block reveal">
+      <div class="block-label">Studi Kasus SYM</div>
+      <div class="block-title">True Up vs Full Year Fraction</div>
+      <p class="block-text">SYM di DeprEx hadir dalam dua varian yang menangani tahun pertama tidak penuh secara berbeda. Data aktual dari sheet SYM: Nilai Perolehan Rp 120.000.000, Umur 5 tahun, Nilai Sisa Rp 12.000.000, aset mulai digunakan 1 Juli 2020.</p>
+
+      <div class="table-label">Metode True Up <span class="badge-true-up">TRUE UP</span></div>
+      <p class="block-text" style="font-size:13px;margin-bottom:4px">Tahun pertama dihitung pro-rata hari riil. Denominator menyesuaikan pecahan tahun aktif, sehingga total periode bisa lebih panjang dari umur nominal.</p>
+      <div class="ledger-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Thn</th>
+              <th>Tanggal</th>
+              <th>Hari / Setahun</th>
+              <th>Denominator</th>
+              <th class="num">Nilai Penyusutan</th>
+              <th class="num">Akumulasi</th>
+              <th class="num">Nilai Buku</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="label">1</td><td>1 Jul – 31 Des 2020</td><td>184 / 366</td><td>0.17</td><td class="num green">18,098,360.66</td><td class="num">18,098,360.66</td><td class="num">101,901,639</td></tr>
+            <tr><td class="label">2</td><td>1 Jan – 31 Des 2021</td><td>365 / 365</td><td>0.27</td><td class="num green">28,800,000.00</td><td class="num">46,898,360.66</td><td class="num">73,101,639</td></tr>
+            <tr><td class="label">3</td><td>1 Jan – 31 Des 2022</td><td>365 / 365</td><td>0.20</td><td class="num green">21,600,000.00</td><td class="num">68,498,360.66</td><td class="num">51,501,639</td></tr>
+            <tr><td class="label">4</td><td>1 Jan – 31 Des 2023</td><td>365 / 365</td><td>0.13</td><td class="num green">14,400,000.00</td><td class="num">82,898,360.66</td><td class="num">37,101,639</td></tr>
+            <tr><td class="label">5</td><td>1 Jan – 31 Des 2024</td><td>366 / 366</td><td>0.07</td><td class="num green">7,200,000.00</td><td class="num">90,098,360.66</td><td class="num">29,901,639</td></tr>
+            <tr><td class="label">6*</td><td>1 Jan – 30 Jun 2025</td><td>181 / 365</td><td>0.03</td><td class="num green">17,901,639.34</td><td class="num">108,000,000.00</td><td class="num amber">12,000,000</td></tr>
+          </tbody>
+          <tfoot>
+            <tr class="tfoot-row">
+              <td colspan="4">Total Penyusutan</td>
+              <td class="num" colspan="3">Rp 108,000,000 (= Nilai Perolehan − Nilai Sisa)</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <p style="font-size:11px;color:var(--text-muted);margin-top:6px;font-family:var(--font-mono)">* Tahun ke-6 adalah sisa carry-over dari tahun pertama tidak penuh</p>
+
+      <div class="table-label" style="margin-top:28px">Metode Full Year Fraction <span class="badge-fyf">FYF</span></div>
+      <p class="block-text" style="font-size:13px;margin-bottom:4px">Tahun pertama dihitung sebagai satu tahun penuh meskipun aset baru digunakan tengah tahun. Periode selesai tepat di akhir umur nominal tanpa carry-over.</p>
+      <div class="ledger-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Thn</th>
+              <th>Tanggal</th>
+              <th>Hari / Setahun</th>
+              <th>Denominator</th>
+              <th class="num">Nilai Penyusutan</th>
+              <th class="num">Akumulasi</th>
+              <th class="num">Nilai Buku</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="label">1</td><td>1 Jul – 31 Des 2020</td><td>184 / 366</td><td>0.33</td><td class="num amber">36,000,000.00</td><td class="num">36,000,000.00</td><td class="num">84,000,000</td></tr>
+            <tr><td class="label">2</td><td>1 Jan – 31 Des 2021</td><td>365 / 365</td><td>0.27</td><td class="num amber">28,800,000.00</td><td class="num">64,800,000.00</td><td class="num">55,200,000</td></tr>
+            <tr><td class="label">3</td><td>1 Jan – 31 Des 2022</td><td>365 / 365</td><td>0.20</td><td class="num amber">21,600,000.00</td><td class="num">86,400,000.00</td><td class="num">33,600,000</td></tr>
+            <tr><td class="label">4</td><td>1 Jan – 31 Des 2023</td><td>365 / 365</td><td>0.13</td><td class="num amber">14,400,000.00</td><td class="num">100,800,000.00</td><td class="num">19,200,000</td></tr>
+            <tr><td class="label">5</td><td>1 Jan – 31 Des 2024</td><td>366 / 366</td><td>0.07</td><td class="num amber">7,200,000.00</td><td class="num">108,000,000.00</td><td class="num green">12,000,000</td></tr>
+          </tbody>
+          <tfoot>
+            <tr class="tfoot-row">
+              <td colspan="4">Total Penyusutan</td>
+              <td class="num" colspan="3">Rp 108,000,000 (= Nilai Perolehan − Nilai Sisa)</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="diff-note">
+        <strong style="color:var(--text-primary)">Perbedaan kunci:</strong> True Up menghasilkan 6 periode dengan Tahun 1 lebih kecil (Rp 18,1 jt) karena hanya 184 hari — sisanya dilunasi di Tahun ke-6. Full Year Fraction memaksa Tahun 1 sebagai tahun penuh (Rp 36 jt, denominator 0.33) sehingga selesai tepat di Tahun ke-5. Total penyusutan kedua varian identik: <strong style="color:var(--accent)">Rp 108.000.000</strong>.
+      </div>
+    </div>
+
+    <!-- RINGKASAN 5 METODE -->
+    <div class="section-block reveal">
+  <div class="block-label" data-i18n="penyusutan.summary.label">Ringkasan Data Aktual</div>
+  <div class="block-title" data-i18n="penyusutan.summary.title">Perbandingan 5 Metode — DeprEx</div>
+  <p class="block-text" data-i18n="penyusutan.summary.text">Setiap sheet menggunakan aset berbeda sebagai contoh kasus yang representatif untuk karakteristik masing-masing metode.</p>
+  <div class="ledger-wrap" style="margin-top:16px">
+    <table>
+      <thead>
+        <tr>
+          <th data-i18n="penyusutan.summary.th.method">Metode</th>
+          <th data-i18n="penyusutan.summary.th.cost">Nilai Perolehan</th>
+          <th data-i18n="penyusutan.summary.th.life">Umur</th>
+          <th data-i18n="penyusutan.summary.th.salvage">Nilai Sisa</th>
+          <th class="num" data-i18n="penyusutan.summary.th.depr">Penyusutan Thn 1</th>
+          <th data-i18n="penyusutan.summary.th.char">Karakteristik</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="label">SLM</td>
+          <td>Rp 200.000.000</td>
+          <td>8 thn</td>
+          <td>Rp 2.000.000</td>
+          <td class="num green">24,546,575</td>
+          <td data-i18n="penyusutan.summary.char.slm">Konstan tiap tahun</td>
+        </tr>
+        <tr>
+          <td class="label">DBM</td>
+          <td>Rp 150.000.000</td>
+          <td>10 thn</td>
+          <td>Rp 60.000.000</td>
+          <td class="num amber">9,000,000</td>
+          <td data-i18n="penyusutan.summary.char.dbm">Menurun dari nilai buku</td>
+        </tr>
+        <tr>
+          <td class="label">DDM</td>
+          <td>Rp 120.000.000</td>
+          <td>6 thn</td>
+          <td>Rp 10.000.000</td>
+          <td class="num red">36,666,667</td>
+          <td data-i18n="penyusutan.summary.char.ddm">Akselerasi, turun cepat</td>
+        </tr>
+        <tr>
+          <td class="label">UPM</td>
+          <td>Rp 120.000.000</td>
+          <td>5 thn</td>
+          <td>Rp 12.000.000</td>
+          <td class="num amber">14,400,000</td>
+          <td data-i18n="penyusutan.summary.char.upm">Berbasis unit produksi</td>
+        </tr>
+        <tr>
+          <td class="label">SYM (True Up)</td>
+          <td>Rp 120.000.000</td>
+          <td>5 thn</td>
+          <td>Rp 12.000.000</td>
+          <td class="num green">18,098,361</td>
+          <td data-i18n="penyusutan.summary.char.sym.trueup">Pro-rata hari, 6 periode</td>
+        </tr>
+        <tr>
+          <td class="label">SYM (FYF)</td>
+          <td>Rp 120.000.000</td>
+          <td>5 thn</td>
+          <td>Rp 12.000.000</td>
+          <td class="num amber">36,000,000</td>
+          <td data-i18n="penyusutan.summary.char.sym.fyf">Tahun penuh, 5 periode</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+  <div class="sidebar-card reveal">
+    <div class="sidebar-title" data-i18n="penyusutan.sidebar.download.title">⬇ Unduh File</div>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;line-height:1.6" data-i18n="penyusutan.sidebar.download.desc">Cheat sheet lengkap 5 metode penyusutan aktiva tetap. Input nilai perolehan, umur, dan nilai sisa — kalkulasi otomatis via rumus.</p>
+    <a href="DeprEx.xlsx" class="download-btn" download>
+      📥 Download DeprEx.xlsx
+    </a>
+  </div>
+  <div class="sidebar-card reveal">
+    <div class="sidebar-title" data-i18n="penyusutan.sidebar.detail.title">📋 Detail Proyek</div>
+    <div class="meta-row"><span class="meta-key" data-i18n="penyusutan.sidebar.detail.tools">Tools</span><span class="meta-val">Google Spreadsheets</span></div>
+    <div class="meta-row"><span class="meta-key" data-i18n="penyusutan.sidebar.detail.standar">Standar</span><span class="meta-val">PSAK Indonesia</span></div>
+    <div class="meta-row"><span class="meta-key" data-i18n="penyusutan.sidebar.detail.metode">Metode</span><span class="meta-val" data-i18n="penyusutan.sidebar.detail.metode.val">5 Metode Lengkap</span></div>
+    <div class="meta-row"><span class="meta-key" data-i18n="penyusutan.sidebar.detail.sym">Varian SYM</span><span class="meta-val">True Up + FYF</span></div>
+    <div class="meta-row"><span class="meta-key" data-i18n="penyusutan.sidebar.detail.prorata">Pro-Rata</span><span class="meta-val" data-i18n="penyusutan.sidebar.detail.prorata.val">Berbasis Hari ✓</span></div>
+    <div class="meta-row"><span class="meta-key" data-i18n="penyusutan.sidebar.detail.otomasi">Otomasi</span><span class="meta-val" data-i18n="penyusutan.sidebar.detail.otomasi.val">Formula Auto ✓</span></div>
+  </div>
+  <div class="sidebar-card reveal">
+    <div class="sidebar-title" data-i18n="penyusutan.sidebar.skill.title">🛠 Skill Diterapkan</div>
+    <div class="skill-list">
+      <div class="skill-item" data-i18n="penyusutan.sidebar.skill.1">Pro-rata penyusutan berbasis hari riil</div>
+      <div class="skill-item" data-i18n="penyusutan.sidebar.skill.2">Formula otomasi antar sheet</div>
+      <div class="skill-item" data-i18n="penyusutan.sidebar.skill.3">Validasi batas nilai sisa (DBM/DDM)</div>
+      <div class="skill-item" data-i18n="penyusutan.sidebar.skill.4">Dua varian SYM dalam satu file</div>
+      <div class="skill-item" data-i18n="penyusutan.sidebar.skill.5">Kalkulasi Jumlah Angka Tahun otomatis</div>
+      <div class="skill-item" data-i18n="penyusutan.sidebar.skill.6">Kapasitas produksi dinamis (UPM)</div>
+    </div>
+  </div>
+</aside>
+</div>
+
+<script>
+  const themeBtn = document.getElementById('themeBtn');
+  const darkIcon = document.querySelector('.mode-icon-dark');
+  const lightIcon = document.querySelector('.mode-icon-light');
+  const saved = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  if (saved === 'light') { darkIcon.style.display='none'; lightIcon.style.display='block'; }
+
+  themeBtn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    darkIcon.style.display = next === 'dark' ? 'block' : 'none';
+    lightIcon.style.display = next === 'light' ? 'block' : 'none';
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  
+  // Formula Slider
+  const slides = document.querySelectorAll('.fslide');
+  const dots = document.querySelectorAll('.fdot-nav');
+  let cur = 0;
+  const total = slides.length;
+
+  function goTo(i) {
+    slides[cur].classList.remove('active');
+    dots[cur].classList.remove('active');
+    cur = i;
+    slides[cur].classList.add('active');
+    dots[cur].classList.add('active');
+  }
+
+  document.getElementById('fNext').addEventListener('click', () => goTo((cur + 1) % total));
+  document.getElementById('fPrev').addEventListener('click', () => goTo((cur - 1 + total) % total));
+  dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.i)));
+</script>
+
+<script type="module" src="../../assets/js/lang.js"></script>
+</body>
+</html>

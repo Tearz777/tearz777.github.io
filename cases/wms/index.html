@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WMS — Sistem Inventaris Gudang · Thery.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --bg-primary: #0a0f1e;
+      --bg-secondary: #0f1729;
+      --bg-card: #131d2e;
+      --bg-card-hover: #1a2640;
+      --bg-terminal: #080d18;
+      --text-primary: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --text-muted: #4a5568;
+      --accent: #d97706;
+      --accent-glow: rgba(217, 119, 6, 0.25);
+      --accent-blue: #1d4ed8;
+      --accent-blue-glow: rgba(29, 78, 216, 0.2);
+      --badge-bg: rgba(217, 119, 6, 0.1);
+      --badge-text: #fbbf24;
+      --border: #1a2640;
+      --border-hover: #2d3f5e;
+      --shadow: rgba(0,0,0,0.5);
+      --green: #10b981;
+      --red: #ef4444;
+      --blue: #3b82f6;
+    }
+    [data-theme="light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f5f9;
+  --bg-terminal: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --accent: #d97706;
+  --accent-glow: rgba(217, 119, 6, 0.15);
+  --badge-bg: rgba(217, 119, 6, 0.08);
+  --badge-text: #b45309;
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
+  --shadow: rgba(0,0,0,0.08);
+  --green: #059669;
+  --red: #dc2626;
+  --blue: #2563eb;
+}
+
+    * { transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, fill 0.2s ease, stroke 0.2s ease;margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      overflow-x: hidden;
+      max-width: 100%;}
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-container {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1100px; margin: 0 auto; padding: 0 24px; height: 60px;
+    }
+    .nav-logo { font-size: 20px; font-weight: 800; }
+    .nav-logo span { color: var(--accent); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .nav-back {
+      font-family: var(--font-mono); font-size: 12px;
+      color: var(--text-muted); border: 1px solid var(--border);
+      padding: 6px 12px; border-radius: 6px; transition: all 0.2s;
+    }
+    .nav-back:hover { border-color: var(--accent); color: var(--accent); }
+    .theme-toggle {
+      background: var(--bg-secondary); border: 1px solid var(--border);
+      color: var(--text-secondary); font-size: 13px; cursor: pointer;
+      padding: 6px 12px; border-radius: 6px; transition: all 0.2s;
+    }
+    .theme-toggle:hover { border-color: var(--border-hover); color: var(--text-primary); }
+    .nav-breadcrumb {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--text-muted);
+  display: flex; align-items: center; gap: 6px;
+}
+    .nav-breadcrumb .sep { color: var(--border-hover); }
+    .nav-breadcrumb .current { color: var(--accent); }
+    @media (max-width: 480px) { .nav-breadcrumb { display: none; } }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 1100px; margin: 0 auto;
+      padding: 48px 24px 40px;
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      width: 100%;
+    }
+    @media (max-width: 768px) {
+      .hero { padding: 32px 16px 28px; }
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 400px; height: 100%;
+      background: radial-gradient(ellipse at right, var(--accent-blue-glow), transparent 70%);
+      pointer-events: none;
+    }
+    .breadcrumb {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--text-muted); margin-bottom: 16px;
+    }
+    .breadcrumb span { color: var(--accent); }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--badge-text); background: var(--badge-bg);
+      border: 1px solid rgba(217,119,6,0.25);
+      padding: 5px 14px; border-radius: 4px; margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 800; letter-spacing: -1.5px;
+      line-height: 1.05; margin-bottom: 16px;
+    }
+    .hero h1 .gold {
+      background: linear-gradient(135deg, #d97706, #f59e0b);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero h1 .blue {
+      background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-desc {
+      font-size: 15px; color: var(--text-secondary);
+      max-width: 580px; line-height: 1.7; margin-bottom: 28px;
+    }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+    .tag {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--text-secondary); background: var(--bg-secondary);
+      border: 1px solid var(--border); padding: 3px 10px; border-radius: 3px;
+    }
+    .hero-stats { display: flex; flex-wrap: wrap; gap: 28px; }
+    .hstat { display: flex; flex-direction: column; gap: 2px; }
+    .hstat-val {
+      font-family: var(--font-mono); font-size: 20px; font-weight: 700;
+      color: var(--accent);
+    }
+    .hstat-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+    /* ── LAYOUT ── */
+    .page-body {
+      max-width: 1100px; margin: 0 auto;
+      padding: 48px 24px 80px;
+      display: grid; grid-template-columns: 1fr 300px; gap: 40px;
+      min-width: 0;
+    }
+    @media (max-width: 768px) {
+      .page-body { grid-template-columns: 1fr; padding: 32px 16px 60px; }
+    }
+    main { min-width: 0; overflow: hidden; }
+    .block { margin-bottom: 44px; min-width: 0; }
+    .block-label {
+      font-family: var(--font-mono); font-size: 10px;
+      text-transform: uppercase; letter-spacing: 2px;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    .block-title {
+      font-size: 19px; font-weight: 700;
+      color: var(--text-primary); margin-bottom: 14px;
+      letter-spacing: -0.3px;
+    }
+    .block-text {
+      font-size: 14px; color: var(--text-secondary); line-height: 1.8;
+      word-break: break-word;
+    }
+
+    /* ── 3 PILLAR CARDS ── */
+    .pillar-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 14px; margin-top: 16px;
+    }
+    @media (max-width: 768px) { .pillar-grid { grid-template-columns: 1fr; } }    
+    .pillar-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px;
+      transition: all 0.2s;
+      min-width: 0; overflow: hidden;
+    }
+    .pillar-card:hover { border-color: var(--border-hover); background: var(--bg-card-hover); }
+    .pillar-icon { font-size: 22px; margin-bottom: 10px; }
+    .pillar-name {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+      color: var(--accent); margin-bottom: 6px; text-transform: uppercase;
+      word-break: break-word;
+    }
+    .pillar-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; word-break: break-word; }
+    .pillar-cols {
+      margin-top: 12px; display: flex; flex-wrap: wrap; gap: 4px;
+    }
+    .col-tag {
+      font-family: var(--font-mono); font-size: 10px;
+      color: var(--text-muted); background: var(--bg-secondary);
+      border: 1px solid var(--border); padding: 2px 6px; border-radius: 3px;
+      word-break: break-word;
+    }
+
+    /* ── FORMULA BLOCK ── */
+    .formula-wrap {
+      background: var(--bg-terminal); border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden; margin-top: 16px;
+      max-width: 100%;
+    }
+    .formula-header {
+      background: #0d1420; padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 8px;
+      overflow: hidden;
+    }
+    .fdot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .fdot-r { background: #ff5f56; }
+    .fdot-y { background: #ffbd2e; }
+    .fdot-g { background: #27c93f; }
+    .formula-title {
+      margin-left: 8px; font-family: var(--font-mono);
+      font-size: 12px; color: var(--text-muted);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .formula-body {
+      padding: 20px; font-family: var(--font-mono);
+      font-size: 12px; line-height: 1.8;
+      overflow-x: auto; white-space: pre;
+      -webkit-overflow-scrolling: touch;
+    }
+    @media (max-width: 768px) {
+      .formula-body {
+        font-size: 11px;
+        padding: 14px;
+      }
+    }
+    .f-fn { color: #60a5fa; }
+    .f-kw { color: var(--accent); }
+    .f-str { color: #34d399; }
+    .f-comment { color: var(--text-muted); font-style: italic; }
+    .f-var { color: #c4b5fd; }
+    
+    /* ── FORMULA SLIDER ── */
+    .fslider-wrap { margin-top: 16px; width: 100%; max-width: 100%; }
+    .fslider-track { width: 100%; }
+    .fslide {
+      display: none;
+      width: 100%; box-sizing: border-box;
+    }
+    .fslide.active { display: block; }
+    .fslide-label {
+      font-family: var(--font-mono); font-size: 10px;
+      color: var(--text-muted); margin-bottom: 10px;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .fslider-controls {
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; margin-top: 14px;
+    }
+    .fslider-btn {
+      background: var(--bg-card); border: 1px solid var(--border);
+      color: var(--text-secondary); font-size: 14px;
+      width: 32px; height: 32px; border-radius: 6px;
+      cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono);
+    }
+    .fslider-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .fslider-dots { display: flex; gap: 8px; align-items: center; }
+    .fdot-nav {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--border-hover); cursor: pointer;
+      transition: all 0.2s;
+    }
+    .fdot-nav.active { background: var(--accent); width: 18px; border-radius: 3px; }
+
+    /* ── SCHEMA TABLE ── */
+    .schema-wrap {
+      overflow-x: auto; border-radius: 8px;
+      border: 1px solid var(--border); margin-top: 16px;
+      -webkit-overflow-scrolling: touch;
+      max-width: 100%;
+    }
+    table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 12px; min-width: 480px; }
+    thead tr { background: var(--bg-secondary); }
+    thead th {
+      padding: 10px 14px; text-align: left;
+      color: var(--text-muted); font-size: 10px;
+      text-transform: uppercase; letter-spacing: 1px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--bg-card-hover); }
+    tbody td { padding: 9px 14px; color: var(--text-secondary); }
+    td.col-name { color: var(--text-primary); font-weight: 600; white-space: nowrap; }
+    td.col-type { color: var(--accent); white-space: nowrap; }
+    td.col-auto { color: var(--green); white-space: nowrap; }
+
+    /* ── STATUS BADGE ── */
+    .status-wrap { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 11px;
+      padding: 6px 14px; border-radius: 4px; border: 1px solid;
+    }
+    .status-done { color: var(--green); border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.05); }
+    .status-wip { color: #fbbf24; border-color: rgba(251,191,36,0.3); background: rgba(251,191,36,0.05); }
+    .status-plan { color: var(--text-muted); border-color: var(--border); background: var(--bg-secondary); }
+    .sdot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+    /* ── SIDEBAR ── */
+    .sidebar { display: flex; flex-direction: column; gap: 18px; }
+    .scard {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px;
+    }
+    .scard-title {
+      font-family: var(--font-mono); font-size: 10px;
+      text-transform: uppercase; letter-spacing: 2px;
+      color: var(--accent); margin-bottom: 14px;
+    }
+    .meta-row {
+      display: flex; justify-content: space-between;
+      padding: 7px 0; border-bottom: 1px solid var(--border);
+      font-size: 12px;
+    }
+    .meta-row:last-child { border-bottom: none; }
+    .meta-key { color: var(--text-muted); }
+    .meta-val { color: var(--text-primary); font-weight: 600; text-align: right; }
+    .download-btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 11px;
+      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+      color: #fff; font-size: 13px; font-weight: 700;
+      border-radius: 7px; border: none; cursor: pointer;
+      font-family: var(--font-mono);
+      transition: opacity 0.2s, transform 0.2s;
+      margin-bottom: 10px;
+    }
+    .download-btn:hover { opacity: 0.85; transform: translateY(-2px); }
+    .download-note { font-size: 11px; color: var(--text-muted); line-height: 1.6; }
+    .skill-list { display: flex; flex-direction: column; gap: 8px; }
+    .skill-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; color: var(--text-secondary);
+    }
+    .skill-item::before {
+      content: ''; width: 5px; height: 5px;
+      background: var(--accent); border-radius: 50%; flex-shrink: 0;
+    }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    
+    .lang-toggle {
+      background: none;
+      border: 1px solid var(--border-color, rgba(255,255,255,0.1));
+      color: var(--text-primary, #fff);
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .lang-toggle:hover {
+      background: var(--hover-bg, rgba(255,255,255,0.05));
+      }
+
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-container">
+    <a href="../../index.html" class="nav-logo">Thery<span>.</span></a>
+    <div class="nav-right">
+      <div class="nav-breadcrumb">
+        <span>cases</span>
+        <span class="sep">/</span>
+        <span class="current">wms</span>
+      </div>
+      <a href="../../index.html#cases" class="nav-back" data-i18n="nav.back">← Kembali</a>
+      <button class="lang-toggle" id="langBtn" aria-label="Toggle Language">
+        <span class="lang-current">EN</span>
+      </button>
+      <button class="theme-toggle">
+        <span class="theme-icon">☀️</span>
+        <span class="theme-text">Light</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="breadcrumb reveal">cases <span>/</span> wms</div>
+  <div class="hero-badge reveal" data-i18n="wms.hero.badge">📦 LOGISTICS & INVENTORY ENGINE</div>
+  <h1 class="reveal" data-i18n="wms.hero.title">Sistem Kontrol<br><span class="gold">Inventaris</span> <span class="blue">Gudang</span></h1>
+  <p class="hero-desc reveal" data-i18n="wms.hero.desc">
+    Arsitektur database inventory 3 pilar terpisah untuk memitigasi selisih stok harian. Tracking order otomatis berbasis formula relasional antar-sheet dengan output keterangan dinamis.
+  </p>
+  <div class="hero-tags reveal">
+    <span class="tag">Excel</span>
+    <span class="tag">WMS</span>
+    <span class="tag">LET + FILTER</span>
+    <span class="tag">Cross-Sheet Formula</span>
+    <span class="tag">Data Relational</span>
+  </div>
+  <div class="hero-stats reveal">
+    <div class="hstat"><span class="hstat-val">250+</span><span class="hstat-label" data-i18n="wms.hero.stat1">Active SKU</span></div>
+    <div class="hstat"><span class="hstat-val">3</span><span class="hstat-label" data-i18n="wms.hero.stat2">Pilar Data</span></div>
+    <div class="hstat"><span class="hstat-val">Dual</span><span class="hstat-label" data-i18n="wms.hero.stat3">Stock Quality</span></div>
+    <div class="hstat"><span class="hstat-val">Auto</span><span class="hstat-label" data-i18n="wms.hero.stat4">Order Tracking</span></div>
+  </div>
+</div>
+<div class="page-body">
+      <main>
+        <!-- 3 PILLAR -->
+        <div class="block reveal">
+          <div class="block-label" data-i18n="wms.pillar.label">Arsitektur</div>
+          <div class="block-title" data-i18n="wms.pillar.title">3 Pilar Database Terpisah</div>
+          <p class="block-text" data-i18n="wms.pillar.desc">Setiap pilar punya tanggung jawab tunggal — tidak ada data yang dicampur. Relasi antar pilar dibangun via formula cross-sheet, bukan duplikasi manual.</p>
+          <div class="pillar-grid">
+            <div class="pillar-card">
+            <div class="pillar-icon">🗂️</div>
+            <div class="pillar-name" data-i18n="wms.pillar.1.name">Master Barang</div>
+            <div class="pillar-desc" data-i18n="wms.pillar.1.desc">Sumber kebenaran tunggal untuk semua SKU. Stok dihitung otomatis dari log transaksi.</div>
+            <div class="pillar-cols">
+              <span class="col-tag" data-i18n="wms.pillar.1.col1">Nama Unit</span>
+              <span class="col-tag" data-i18n="wms.pillar.1.col2">Kode SKU</span>
+              <span class="col-tag" data-i18n="wms.pillar.1.col3">Stok Awal</span>
+              <span class="col-tag" data-i18n="wms.pillar.1.col4">Masuk</span>
+              <span class="col-tag" data-i18n="wms.pillar.1.col5">Rusak</span>
+              <span class="col-tag" data-i18n="wms.pillar.1.col6">Keluar</span>
+              <span class="col-tag" data-i18n="wms.pillar.1.col7">Stok Akhir</span>
+            <span class="col-tag" data-i18n="wms.pillar.1.col8">Nilai Persediaan</span>
+            <span class="col-tag" data-i18n="wms.pillar.1.col9">MA</span>
+            <span class="col-tag" data-i18n="wms.pillar.1.col10">Harga Jual</span>
+          </div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">📋</div>
+          <div class="pillar-name" data-i18n="wms.pillar.2.name">Transaksi</div>
+          <div class="pillar-desc" data-i18n="wms.pillar.2.desc">Log semua movement barang — inbound, outbound, dan kondisi fisik tiap transaksi.</div>
+          <div class="pillar-cols">
+            <span class="col-tag" data-i18n="wms.pillar.2.col1">Tanggal</span>
+            <span class="col-tag" data-i18n="wms.pillar.2.col2">Waktu</span>
+            <span class="col-tag" data-i18n="wms.pillar.2.col3">Type</span>
+            <span class="col-tag" data-i18n="wms.pillar.2.col4">By Order</span>
+            <span class="col-tag" data-i18n="wms.pillar.2.col5">By Count</span>
+            <span class="col-tag" data-i18n="wms.pillar.2.col6">Aman</span>
+            <span class="col-tag" data-i18n="wms.pillar.2.col7">Rusak</span>
+            <span class="col-tag" data-i18n="wms.pillar.2.col8">Nilai</span>
+          </div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">📅</div>
+          <div class="pillar-name" data-i18n="wms.pillar.3.name">Jadwal Order</div>
+          <div class="pillar-desc" data-i18n="wms.pillar.3.desc">Tracking pesanan ke supplier. Keterangan datang otomatis — selisih qty dan hari dihitung real-time.</div>
+          <div class="pillar-cols">
+            <span class="col-tag" data-i18n="wms.pillar.3.col1">Tanggal Order</span>
+            <span class="col-tag" data-i18n="wms.pillar.3.col2">Estimasi</span>
+            <span class="col-tag" data-i18n="wms.pillar.3.col3">Qty</span>
+            <span class="col-tag" data-i18n="wms.pillar.3.col4">Harga Beli</span>
+            <span class="col-tag" data-i18n="wms.pillar.3.col5">Status</span>
+            <span class="col-tag" data-i18n="wms.pillar.3.col6">Keterangan</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</div>
+    <!-- FORMULA SLIDER -->
+    <div class="block reveal">
+  <div class="block-label" data-i18n="wms.formula.label">Core Formula</div>
+  <div class="block-title" data-i18n="wms.formula.title">Dua Formula Kunci</div>
+  <p class="block-text" data-i18n="wms.formula.desc">SKU auto-generate dan order tracking — dua formula yang mengikat seluruh arsitektur 3 pilar.</p>
+
+  <div class="fslider-wrap">
+    <div class="fslider-track" id="fsliderTrack">
+
+      <!-- SLIDE 1 -->
+      <div class="fslide active">
+        <div class="fslide-label" data-i18n="wms.formula.slide1.label">1 / 2 — Transaksi!E11 · Kode SKU</div>
+        <div class="formula-wrap">
+          <div class="formula-header">
+            <div class="fdot fdot-r"></div>
+            <div class="fdot fdot-y"></div>
+            <div class="fdot fdot-g"></div>
+            <span class="formula-title" data-i18n="wms.formula.slide1.title">ARRAY_CONSTRAIN + IFS + XLOOKUP</span>
+          </div>
+          <div class="formula-body">
+=<span class="f-fn">ARRAY_CONSTRAIN</span>(<span class="f-fn">ARRAYFORMULA</span>(
+  <span class="f-fn">IFS</span>(
+    <span class="f-comment">// Kondisi 1 — sel kosong, skip</span>
+    B11=<span class="f-str">""</span>, <span class="f-str">""</span>,
+
+    <span class="f-comment">// Kondisi 2 — tidak ada di Master → slug</span>
+    <span class="f-fn">COUNTIF</span>(<span class="f-str">'Master Barang'</span>!B:B, B11)=0,
+    <span class="f-fn">SUBSTITUTE</span>(<span class="f-fn">TRIM</span>(B11), <span class="f-str">" "</span>, <span class="f-str">"-"</span>),
+
+    <span class="f-comment">// Kondisi 3 — ditemukan → ambil SKU dari master</span>
+    <span class="f-fn">COUNTIF</span>(<span class="f-str">'Master Barang'</span>!B:B, B11)=1,
+    <span class="f-fn">XLOOKUP</span>(B11, <span class="f-str">'Master Barang'</span>!B:B, <span class="f-str">'Master Barang'</span>!C:C,,,1)
+  )
+), 1, 1)
+              </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 2 -->
+      <div class="fslide">
+        <div class="fslide-label" data-i18n="wms.formula.slide2.label">2 / 2 — Jadwal!I2 · Keterangan</div>
+        <div class="formula-wrap">
+          <div class="formula-header">
+            <div class="fdot fdot-r"></div>
+            <div class="fdot fdot-y"></div>
+            <div class="fdot fdot-g"></div>
+            <span class="formula-title" data-i18n="wms.formula.slide2.title">LET + FILTER + IFERROR + INDEX</span>
+          </div>
+          <div class="formula-body">
+=<span class="f-fn">IF</span>(<span class="f-fn">OR</span>(B2=<span class="f-str">""</span>, E2=<span class="f-str">""</span>), <span class="f-str">""</span>, <span class="f-fn">LET</span>(
+  <span class="f-var">Nama</span>, B2,  <span class="f-var">SKU</span>, C2,
+  <span class="f-var">Estimasi</span>, E2,  <span class="f-var">QtyOrder</span>, F2,
+
+  <span class="f-comment">// Cross-reference ke sheet Transaksi</span>
+  <span class="f-var">FilterTrans</span>, <span class="f-fn">FILTER</span>(
+    Transaksi!B:H,
+    (Transaksi!F:F=<span class="f-str">"Barang Datang"</span>) *
+    (Transaksi!D:D=<span class="f-var">Nama</span>) *
+    (Transaksi!E:E=<span class="f-var">SKU</span>)
+  ),
+
+  <span class="f-var">TotalDatang</span>, <span class="f-fn">IFERROR</span>(<span class="f-fn">SUM</span>(<span class="f-fn">INDEX</span>(<span class="f-var">FilterTrans</span>,,7)), 0),
+  <span class="f-var">TanggalDatang</span>, <span class="f-fn">IFERROR</span>(<span class="f-fn">MAX</span>(<span class="f-fn">INDEX</span>(<span class="f-var">FilterTrans</span>,,1)), 0),
+  <span class="f-var">SelisihQty</span>, <span class="f-var">QtyOrder</span>-<span class="f-var">TotalDatang</span>,
+  <span class="f-var">SelisihHari</span>, <span class="f-var">TanggalDatang</span>-<span class="f-var">Estimasi</span>,
+
+  <span class="f-var">KetQty</span>, <span class="f-fn">IF</span>(<span class="f-var">SelisihQty</span>=0, <span class="f-str">"Oke"</span>,
+    <span class="f-fn">IF</span>(<span class="f-var">SelisihQty</span>&gt;0,
+      <span class="f-str">"Kurang "</span>&amp;<span class="f-var">SelisihQty</span>&amp;<span class="f-str">" pcs"</span>,
+      <span class="f-str">"Lebih "</span>&amp;<span class="f-fn">ABS</span>(<span class="f-var">SelisihQty</span>)&amp;<span class="f-str">" pcs"</span>)),
+
+  <span class="f-var">KetHari</span>, <span class="f-fn">IF</span>(<span class="f-var">TanggalDatang</span>=0, <span class="f-str">"Belum datang"</span>,
+    <span class="f-fn">IF</span>(<span class="f-var">SelisihHari</span>=0, <span class="f-str">""</span>,
+    <span class="f-fn">IF</span>(<span class="f-var">SelisihHari</span>&gt;0,
+      <span class="f-str">"Terlambat "</span>&amp;<span class="f-var">SelisihHari</span>&amp;<span class="f-str">" hari"</span>,
+      <span class="f-str">"Lebih cepat "</span>&amp;<span class="f-fn">ABS</span>(<span class="f-var">SelisihHari</span>)&amp;<span class="f-str">" hari"</span>))),
+
+  <span class="f-var">Hasil</span>, <span class="f-fn">IF</span>(<span class="f-var">TanggalDatang</span>=0, <span class="f-var">KetHari</span>,
+    <span class="f-fn">IF</span>(<span class="f-fn">AND</span>(<span class="f-var">SelisihQty</span>=0, <span class="f-var">SelisihHari</span>=0), <span class="f-str">"Oke"</span>,
+    <span class="f-fn">IF</span>(<span class="f-var">SelisihQty</span>=0, <span class="f-var">KetHari</span>,
+    <span class="f-fn">IF</span>(<span class="f-var">SelisihHari</span>=0, <span class="f-var">KetQty</span>,
+    <span class="f-var">KetHari</span>&amp;<span class="f-str">" dengan "</span>&amp;<span class="f-fn">LOWER</span>(<span class="f-var">KetQty</span>))))),
+  <span class="f-var">Hasil</span>
+))
+              </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="fslider-controls">
+      <button class="fslider-btn" id="fPrev">←</button>
+      <div class="fslider-dots">
+        <span class="fdot-nav active" data-i="0"></span>
+        <span class="fdot-nav" data-i="1"></span>
+      </div>
+      <button class="fslider-btn" id="fNext">→</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCHEMA -->
+<div class="block reveal">
+  <div class="block-label" data-i18n="wms.schema.label">Schema</div>
+  <div class="block-title" data-i18n="wms.schema.title">Master Barang — Struktur Kolom</div>
+  <div class="schema-wrap">
+    <table>
+      <thead>
+        <tr><th data-i18n="wms.schema.header.column">Kolom</th><th data-i18n="wms.schema.header.type">Tipe</th><th data-i18n="wms.schema.header.source">Sumber</th><th data-i18n="wms.schema.header.desc">Keterangan</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="col-name" data-i18n="wms.schema.row.1.col">Nama Unit</td><td class="col-type" data-i18n="wms.schema.row.1.type">Text</td><td data-i18n="wms.schema.row.1.source">Manual</td><td data-i18n="wms.schema.row.1.desc">Nama produk</td></tr>
+        <tr><td class="col-name" data-i18n="wms.schema.row.2.col">Kode SKU</td><td class="col-type" data-i18n="wms.schema.row.2.type">Text</td><td data-i18n="wms.schema.row.2.source">Manual</td><td data-i18n="wms.schema.row.2.desc">Format: 001A/NAMA-ITEM</td></tr>
+        <tr><td class="col-name" data-i18n="wms.schema.row.3.col">Stok Awal</td><td class="col-type" data-i18n="wms.schema.row.3.type">Number</td><td data-i18n="wms.schema.row.3.source">Manual</td><td data-i18n="wms.schema.row.3.desc">Stok awal periode</td></tr>
+        <tr><td class="col-name" data-i18n="wms.schema.row.4.col">Masuk</td><td class="col-type" data-i18n="wms.schema.row.4.type">Number</td><td class="col-auto" data-i18n="wms.schema.row.4.source">Auto</td><td data-i18n="wms.schema.row.4.desc">SUM dari Transaksi inbound</td></tr>
+        <tr><td class="col-name" data-i18n="wms.schema.row.5.col">Rusak</td><td class="col-type" data-i18n="wms.schema.row.5.type">Number</td><td class="col-auto" data-i18n="wms.schema.row.5.source">Auto</td><td data-i18n="wms.schema.row.5.desc">SUM dari Transaksi rusak</td></tr>
+        <tr><td class="col-name" data-i18n="wms.schema.row.6.col">Keluar</td><td class="col-type" data-i18n="wms.schema.row.6.type">Number</td><td class="col-auto" data-i18n="wms.schema.row.6.source">Auto</td><td data-i18n="wms.schema.row.6.desc">SUM dari Transaksi outbound</td></tr>
+        <tr><td class="col-name" data-i18n="wms.schema.row.7.col">Stok Akhir</td><td class="col-type" data-i18n="wms.schema.row.7.type">Number</td><td class="col-auto" data-i18n="wms.schema.row.7.source">Auto</td><td data-i18n="wms.schema.row.7.desc">Awal + Masuk - Rusak - Keluar</td></tr>
+        <tr><td class="col-name" data-i18n="wms.schema.row.8.col">Nilai Persediaan</td><td class="col-type" data-i18n="wms.schema.row.8.type">Currency</td><td class="col-auto" data-i18n="wms.schema.row.8.source">Auto</td><td data-i18n="wms.schema.row.8.desc">Stok Akhir × MA</td></tr>
+        <tr><td class="col-name" data-i18n="wms.schema.row.9.col">MA</td><td class="col-type" data-i18n="wms.schema.row.9.type">Currency</td><td data-i18n="wms.schema.row.9.source">WIP</td><td data-i18n="wms.schema.row.9.desc">Moving Average harga beli</td></tr>
+        <tr><td class="col-name" data-i18n="wms.schema.row.10.col">Harga Jual</td><td class="col-type" data-i18n="wms.schema.row.10.type">Currency</td><td data-i18n="wms.schema.row.10.source">Manual</td><td data-i18n="wms.schema.row.10.desc">Harga jual per unit</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- STATUS -->
+<div class="block reveal">
+  <div class="block-label" data-i18n="wms.status.label">Progress</div>
+  <div class="block-title" data-i18n="wms.status.title">Status Pengembangan</div>
+  <div class="status-wrap">
+    <span class="status-badge status-done"><span class="sdot"></span><span data-i18n="wms.status.item.0">Master Barang</span></span>
+    <span class="status-badge status-done"><span class="sdot"></span><span data-i18n="wms.status.item.1">Log Transaksi</span></span>
+    <span class="status-badge status-done"><span class="sdot"></span><span data-i18n="wms.status.item.2">Jadwal Order</span></span>
+    <span class="status-badge status-done"><span class="sdot"></span><span data-i18n="wms.status.item.3">Auto Order Tracking</span></span>
+    <span class="status-badge status-done"><span class="sdot"></span><span data-i18n="wms.status.item.4">Dual Stock Quality</span></span>
+    <span class="status-badge status-wip"><span class="sdot"></span><span data-i18n="wms.status.item.5">Moving Average (WIP)</span></span>
+    <span class="status-badge status-plan"><span class="sdot"></span><span data-i18n="wms.status.item.6">Laporan Summary</span></span>
+  </div>
+</div>
+  </main>
+
+  
+  <!-- SIDEBAR -->
+<aside class="sidebar">
+
+  <div class="scard reveal">
+    <div class="scard-title" data-i18n="wms.sidebar.download.title">⬇ Unduh File</div>
+    <a href="GudangEx.xlsx" class="download-btn" download data-i18n="wms.sidebar.download.btn">📥 Download .xlsx</a>
+    <p class="download-note" data-i18n="wms.sidebar.download.note">Berisi template 3 pilar lengkap dengan formula relasional. Data item bersifat dummy.</p>
+  </div>
+
+  <div class="scard reveal">
+    <div class="scard-title" data-i18n="wms.sidebar.detail.title">📋 Detail</div>
+    <div class="meta-row"><span class="meta-key" data-i18n="wms.sidebar.detail.tools">Tools</span><span class="meta-val" data-i18n="wms.sidebar.detail.tools.val">Google Spreadsheets</span></div>
+    <div class="meta-row"><span class="meta-key" data-i18n="wms.sidebar.detail.sku">SKU</span><span class="meta-val" data-i18n="wms.sidebar.detail.sku.val">250+ item</span></div>
+    <div class="meta-row"><span class="meta-key" data-i18n="wms.sidebar.detail.sheet">Sheet</span><span class="meta-val" data-i18n="wms.sidebar.detail.sheet.val">5 sheet</span></div>
+    <div class="meta-row"><span class="meta-key" data-i18n="wms.sidebar.detail.formula">Formula</span><span class="meta-val" data-i18n="wms.sidebar.detail.formula.val">LET + FILTER</span></div>
+    <div class="meta-row"><span class="meta-key" data-i18n="wms.sidebar.detail.status">Status</span><span class="meta-val" data-i18n="wms.sidebar.detail.status.val">Active (WIP)</span></div>
+  </div>
+
+  <div class="scard reveal">
+    <div class="scard-title" data-i18n="wms.sidebar.skill.title">🛠 Skill</div>
+    <div class="skill-list">
+      <div class="skill-item" data-i18n="wms.sidebar.skill.1">Cross-sheet FILTER + LET</div>
+      <div class="skill-item" data-i18n="wms.sidebar.skill.2">Dynamic text output formula</div>
+      <div class="skill-item" data-i18n="wms.sidebar.skill.3">Relational data architecture</div>
+      <div class="skill-item" data-i18n="wms.sidebar.skill.4">Dual quality stock tracking</div>
+      <div class="skill-item" data-i18n="wms.sidebar.skill.5">Pro-rata order variance</div>
+      <div class="skill-item" data-i18n="wms.sidebar.skill.6">Inventory valuation realtime</div>
+    </div>
+  </div>
+
+</aside>
+
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  
+  // Formula Slider
+  const slides = document.querySelectorAll('.fslide');
+  const dots = document.querySelectorAll('.fdot-nav');
+  let cur = 0;
+  const total = slides.length;
+
+  function goTo(i) {
+    slides[cur].classList.remove('active');
+    dots[cur].classList.remove('active');
+    cur = i;
+    slides[cur].classList.add('active');
+    dots[cur].classList.add('active');
+  }
+
+  const nextBtn = document.getElementById('fNext');
+  const prevBtn = document.getElementById('fPrev');
+  if (nextBtn && prevBtn && dots.length) {
+    nextBtn.addEventListener('click', () => goTo((cur + 1) % total));
+    prevBtn.addEventListener('click', () => goTo((cur - 1 + total) % total));
+    dots.forEach(d => d.addEventListener('click', () => goTo(parseInt(d.dataset.i))));
+  }
+</script>
+<script type="module" src="../../assets/js/main.js"></script>
+<script type="module" src="../../assets/js/lang.js"></script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analisis Infrastruktur Pendidikan Surabaya — Thery Vissabil Lillah</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="style.css">
+  
+<style>
+  .lang-toggle {
+      font-size: 13px;
+      padding: 6px 14px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      };
+  nav { 
+        position: sticky; top: 0; background: var(--bg-primary); border-bottom: 1px solid var(--border); z-index: 100; }
+  .nav-container { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; }
+  .nav-logo { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+  .nav-logo span { color: var(--accent); }
+  .nav-back {
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+      font-size: 13px;
+      padding: 6px 14px;}
+  .nav-back:hover { border-color: var(--accent); color: var(--accent); }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .theme-toggle { font-size: 13px; padding: 6px 14px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; color: var(--text-secondary); }
+  </style>
+  
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-container">
+      <a href="../../index.html" class="nav-logo">Thery<span>.</span></a>
+      <div class="nav-right">
+        <a href="../../index.html#analysis" class="nav-back" data-i18n="nav.back">← Kembali</a>
+        <button class="lang-toggle">EN</button>        
+        <button class="theme-toggle" id="themeBtn">
+          <span class="theme-icon">☀️</span>
+          <span class="theme-text">Light</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <!-- HERO -->
+  <section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="pulse"></span> <span data-i18n="ed.hero.badge">Python · Pandas · Folium · Scikit-learn</span>
+    </div>
+    <h1 class="hero-title">
+      <span data-i18n="ed.hero.title">Infrastruktur Pendidikan</span>
+      <br>
+      <span class="accent" data-i18n="ed.hero.accent">Surabaya</span>
+    </h1>
+    <p class="hero-subtitle" data-i18n="ed.hero.subtitle">EDA · K-Means Clustering · Geospatial</p>
+    <p class="hero-description" data-i18n="ed.hero.desc">
+      Analisis multi-dataset infrastruktur pendidikan dasar (SD/SMP) di 31 kecamatan Surabaya — akreditasi, inklusi, demografi, dan fasilitas kesehatan.
+    </p>
+    <div class="case-meta" style="justify-content:center;">
+      <span class="case-tag">Python</span>
+      <span class="case-tag">Pandas</span>
+      <span class="case-tag">Scikit-learn</span>
+      <span class="case-tag">Folium</span>
+      <span class="case-tag">Seaborn</span>
+      <span class="case-tag">Matplotlib</span>
+    </div>
+  </div>
+  </section>
+  <!-- OVERVIEW -->
+  <section>
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label" data-i18n="ed.overview.label">Background</div>
+      <h2 class="section-title" data-i18n="ed.overview.title">Problem Statement</h2>
+    </div>
+
+    <div class="base-card reveal">
+      <p style="font-size:15px; line-height:1.8; color:var(--text-secondary); margin-bottom:1.5rem;" data-i18n="ed.overview.p1">
+        Infrastruktur pendidikan dasar di Surabaya tidak merata antar kecamatan — ada yang sudah maju dengan mayoritas sekolah akreditasi A, ada yang masih tertinggal dengan fasilitas kesehatan minim dan program inklusi yang belum berkembang.
+      </p>
+      <p style="font-size:15px; line-height:1.8; color:var(--text-secondary);" data-i18n="ed.overview.p2">
+        Proyek ini menggabungkan <strong>5 dataset publik</strong> — akreditasi SD/SMP, siswa inklusi, demografi usia, dan fasilitas kesehatan — untuk memetakan kondisi nyata tiap kecamatan dan mengidentifikasi zona prioritas intervensi menggunakan <strong>K-Means clustering</strong>.
+      </p>
+
+      <div class="case-stats" style="margin-top:2rem;">
+        <div class="case-stat">
+          <div class="case-stat-value">5</div>
+          <div class="case-stat-label" data-i18n="ed.stat.dataset">Dataset</div>
+        </div>
+        <div class="case-stat">
+          <div class="case-stat-value">31</div>
+          <div class="case-stat-label" data-i18n="ed.stat.kecamatan">Kecamatan</div>
+        </div>
+        <div class="case-stat">
+          <div class="case-stat-value">5</div>
+          <div class="case-stat-label" data-i18n="ed.stat.analisis">Analisis EDA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  <!-- Analysis -->
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label" data-i18n="ed.eda.label">Exploratory Data Analysis</div>
+        <h2 class="section-title" data-i18n="ed.eda.title">Key Findings</h2>
+      </div>
+
+      <div class="project-list">
+
+        <div class="project-item reveal">
+          <div class="project-meta-left">
+            <span class="project-tech" data-i18n="ed.finding.1.tag">Analisis 1</span>
+          </div>
+          <div class="project-main">
+            <h3 class="project-name" data-i18n="ed.finding.1.title">Top 10 Kecamatan — SD Akreditasi A</h3>
+            <p class="project-info" data-i18n="ed.finding.1.desc">Sukolilo, Tambaksari, dan Tandes mendominasi jumlah SD akreditasi A. Ketiganya berada di wilayah padat dekat pusat kota — mengindikasikan korelasi antara aksesibilitas wilayah dengan kualitas akreditasi.</p>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <div class="project-meta-left">
+            <span class="project-tech" data-i18n="ed.finding.2.tag">Analisis 2</span>
+          </div>
+          <div class="project-main">
+            <h3 class="project-name" data-i18n="ed.finding.2.title">Siswa Inklusi per Kecamatan</h3>
+            <p class="project-info" data-i18n="ed.finding.2.desc">Tambaksari, Sukolilo, dan Semampir mencatat rata-rata siswa inklusi tertinggi. Dua kecamatan teratas juga masuk top 3 SD akreditasi A — kualitas sekolah dan inklusivitas cenderung berjalan beriringan.</p>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <div class="project-meta-left">
+            <span class="project-tech" data-i18n="ed.finding.3.tag">Analisis 3</span>
+          </div>
+          <div class="project-main">
+            <h3 class="project-name" data-i18n="ed.finding.3.title">Korelasi SD Akreditasi A vs Sekolah Inklusi</h3>
+            <p class="project-info" data-i18n="ed.finding.3.desc">Terdapat korelasi positif tipis — kecamatan dengan lebih banyak SD akreditasi A cenderung memiliki lebih banyak sekolah inklusi. Namun korelasinya tidak kuat, artinya akreditasi tinggi bukan satu-satunya penentu inklusivitas.</p>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <div class="project-meta-left">
+            <span class="project-tech" data-i18n="ed.finding.4.tag">Analisis 4</span>
+          </div>
+          <div class="project-main">
+            <h3 class="project-name" data-i18n="ed.finding.4.title">Tren Siswa Inklusi 2025–2026</h3>
+            <p class="project-info" data-i18n="ed.finding.4.desc">Jumlah SD dan SMP relatif stabil, namun sekolah inklusi menunjukkan tren naik konsisten ~60% dalam setahun — mengindikasikan kebijakan aktif Pemkot mendorong sekolah reguler mengadopsi program inklusi tanpa membangun sekolah baru.</p>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <div class="project-meta-left">
+            <span class="project-tech" data-i18n="ed.finding.5.tag">Analisis 5</span>
+          </div>
+          <div class="project-main">
+            <h3 class="project-name" data-i18n="ed.finding.5.title">Rasio Sekolah Inklusi per Total Sekolah</h3>
+            <p class="project-info" data-i18n="ed.finding.5.desc">Beberapa kecamatan dengan total sekolah sedikit justru punya rasio inklusi tinggi — menunjukkan komitmen lokal yang kuat meski skala kecil. Ini jadi sinyal penting untuk prioritas dukungan kebijakan.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- MAP -->
+  <section>
+    <div class="container">
+      <div class="section-header reveal">
+      <div class="section-label" data-i18n="ed.map.label">Geospatial Output</div>
+      <h2 class="section-title" data-i18n="ed.map.title">Interactive Map</h2>
+      <p class="section-desc" data-i18n="ed.map.desc">Hasil clustering K-Means divisualisasikan ke peta interaktif — tiap kecamatan diberi warna berdasarkan priority score intervensi.</p>
+    </div>
+
+      <div class="base-card reveal" style="padding:0; overflow:hidden;">
+        <iframe
+          src="../../analysis/education/index.html"
+          width="100%"
+          height="420"
+          style="border:none; display:block;"
+          loading="lazy"
+          title="Peta Infrastruktur Pendidikan Surabaya">
+        </iframe>
+      </div>
+
+      <div class="case-actions reveal" style="margin-top:1.5rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+        <a href="../../projects/education/index.html" target="_blank" class="btn-case btn-view" style="width:auto; padding:12px 24px;" data-i18n="ed.btn.map">
+          🗺️ Open Full Map →
+        </a>
+        <a href="https://github.com/Tearz777/data-analysis-portfolio/blob/main/education/Educational%20Analysis.ipynb" target="_blank" class="btn-case" style="width:auto; padding:12px 24px; border:1px solid var(--border); color:var(--text-muted);" data-i18n="ed.btn.notebook">
+          📓 View Full Notebook
+        </a>
+      </div>
+
+    </div>
+  </section>
+  <!-- FOOTER -->
+  <footer>
+  <div class="footer-container">
+    <p class="footer-copy" data-i18n="ed.footer.copy">&copy; 2026 Thery Vissabil Lillah · Data Analysis</p>
+    <div class="footer-controls">
+      <button class="lang-toggle">EN</button>
+      <button class="theme-toggle" id="themeBtnFooter">
+        <span class="theme-icon">☀️</span>
+        <span class="theme-text">Light</span>
+      </button>
+    </div>
+  </div>
+  </footer>
+  
+  <script type="module">
+    import { initTheme } from '../../assets/js/theme.js';
+    document.addEventListener('DOMContentLoaded', () => initTheme());
+  </script>
+  <script type="module" src="../../assets/js/lang.js"></script>
+</body>
+</html>

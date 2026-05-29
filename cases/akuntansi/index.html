@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Siklus Akuntansi — PT Gunung Semeru · Thery.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── TOKENS (mirrored from variables.css) ── */
+    :root {
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --bg-primary: #0a0e1a;
+      --bg-secondary: #111827;
+      --bg-card: #1a2332;
+      --bg-card-hover: #1e293b;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent: #f59e0b;
+      --accent-glow: rgba(245, 158, 11, 0.3);
+      --badge-bg: rgba(245, 158, 11, 0.1);
+      --badge-text: #fbbf24;
+      --border: #1e293b;
+      --border-hover: #334155;
+      --shadow: rgba(0,0,0,0.4);
+      --gradient-start: #f59e0b;
+      --gradient-end: #ef4444;
+    }
+    [data-theme="light"] {
+      --bg-primary: #f8fafc; --bg-secondary: #f1f5f9; --bg-card: #ffffff;
+      --bg-card-hover: #f8fafc; --text-primary: #0f172a; --text-secondary: #475569;
+      --text-muted: #94a3b8; --accent: #0891b2; --accent-glow: rgba(8,145,178,0.15);
+      --border: #e2e8f0; --border-hover: #cbd5e1; --badge-bg: rgba(8,145,178,0.1);
+      --badge-text: #0e7490; --shadow: rgba(0,0,0,0.08);
+      --gradient-start: #0891b2; --gradient-end: #2563eb;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    a { color: inherit; text-decoration: none; }
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+    .nav-container {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1100px; margin: 0 auto; padding: 0 24px; height: 60px;
+    }
+    .nav-logo { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .nav-logo span { color: var(--accent); }
+    .nav-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 12px;
+      color: var(--text-muted); border: 1px solid var(--border);
+      padding: 6px 12px; border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-back:hover { border-color: var(--accent); color: var(--accent); }
+    .theme-toggle {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--bg-secondary); border: 1px solid var(--border);
+      color: var(--text-secondary); font-size: 13px; cursor: pointer;
+      padding: 6px 12px; border-radius: 6px; transition: all 0.2s;
+    }
+    .theme-toggle:hover { border-color: var(--border-hover); color: var(--text-primary); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    /* ── HERO ── */
+    .case-hero {
+      max-width: 1100px; margin: 0 auto;
+      padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--text-muted); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .breadcrumb span { color: var(--accent); }
+    .case-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--badge-text); background: var(--badge-bg);
+      border: 1px solid rgba(6,182,212,0.2);
+      padding: 5px 14px; border-radius: 50px; margin-bottom: 20px;
+    }
+    .case-hero h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 800; letter-spacing: -1.5px;
+      line-height: 1.1; margin-bottom: 16px;
+    }
+    .gradient {
+      background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .case-hero p {
+      font-size: 15px; color: var(--text-secondary);
+      max-width: 620px; line-height: 1.7; margin-bottom: 32px;
+    }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+    .tag {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--text-secondary); background: var(--bg-secondary);
+      border: 1px solid var(--border); padding: 3px 10px; border-radius: 4px;
+    }
+    .hero-stats {
+      display: flex; flex-wrap: wrap; gap: 32px;
+    }
+    .hstat { display: flex; flex-direction: column; gap: 2px; }
+    .hstat-val {
+      font-family: var(--font-mono); font-size: 22px; font-weight: 700;
+      color: var(--text-primary);
+    }
+    .hstat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+    /* ── MAIN LAYOUT ── */
+    .case-body {
+      max-width: 1100px; margin: 0 auto;
+      padding: 48px 24px 80px;
+      display: grid; grid-template-columns: 1fr 320px; gap: 40px;
+    }
+    @media (max-width: 768px) {
+      .case-body { grid-template-columns: 1fr; }
+    }
+
+    /* ── SECTIONS ── */
+    .section-block { margin-bottom: 48px; }
+    .block-label {
+      font-family: var(--font-mono); font-size: 10px;
+      text-transform: uppercase; letter-spacing: 2px;
+      color: var(--accent); margin-bottom: 12px;
+    }
+    .block-title {
+      font-size: 20px; font-weight: 700;
+      color: var(--text-primary); margin-bottom: 16px;
+      letter-spacing: -0.3px;
+    }
+    .block-text {
+      font-size: 14px; color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    /* ── LEDGER TABLE ── */
+    .ledger-wrap {
+      overflow-x: auto; border-radius: 10px;
+      border: 1px solid var(--border); margin-top: 16px;
+    }
+    table {
+      width: 100%; border-collapse: collapse;
+      font-family: var(--font-mono); font-size: 12px;
+    }
+    thead tr { background: var(--bg-secondary); }
+    thead th {
+      padding: 10px 14px; text-align: left;
+      color: var(--text-muted); font-weight: 600;
+      text-transform: uppercase; font-size: 10px; letter-spacing: 1px;
+      border-bottom: 1px solid var(--border);
+    }
+    thead th.num { text-align: right; }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--bg-card-hover); }
+    tbody td { padding: 10px 14px; color: var(--text-secondary); }
+    tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    tbody td.debet { color: #34d399; }
+    tbody td.kredit { color: #f87171; }
+    tbody td.akun { color: var(--text-primary); font-weight: 600; }
+    .tfoot-row td {
+      padding: 10px 14px; border-top: 1px solid var(--border);
+      font-weight: 700; color: var(--text-primary);
+      background: var(--bg-secondary);
+    }
+
+    /* ── CYCLE FLOW ── */
+    .cycle-flow {
+      display: flex; flex-direction: column; gap: 0; margin-top: 16px;
+    }
+    .cycle-step {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 16px 0; border-bottom: 1px solid var(--border);
+    }
+    .cycle-step:last-child { border-bottom: none; }
+    .step-num {
+      font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+      color: var(--accent); background: var(--badge-bg);
+      border: 1px solid rgba(6,182,212,0.2);
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .step-content {}
+    .step-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+    .step-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+    /* ── DEPRECIATION MINI TABLE ── */
+    .dep-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px; margin-top: 16px;
+    }
+    @media (max-width: 600px) { .dep-grid { grid-template-columns: 1fr; } }
+    .dep-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px;
+    }
+    .dep-asset { font-size: 12px; color: var(--accent); font-family: var(--font-mono); margin-bottom: 6px; }
+    .dep-name { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+    .dep-row { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px; }
+    .dep-row span:first-child { color: var(--text-muted); }
+    .dep-row span:last-child { color: var(--text-secondary); font-family: var(--font-mono); }
+
+    /* ── SIDEBAR ── */
+    .sidebar { display: flex; flex-direction: column; gap: 20px; }
+    .sidebar-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px;
+    }
+    .sidebar-title {
+      font-family: var(--font-mono); font-size: 10px;
+      text-transform: uppercase; letter-spacing: 2px;
+      color: var(--accent); margin-bottom: 16px;
+    }
+    .meta-row {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding: 8px 0; border-bottom: 1px solid var(--border);
+      font-size: 12px;
+    }
+    .meta-row:last-child { border-bottom: none; }
+    .meta-key { color: var(--text-muted); }
+    .meta-val { color: var(--text-primary); font-weight: 600; text-align: right; max-width: 140px; }
+
+    .download-btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 12px;
+      background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+      color: #000; font-size: 13px; font-weight: 700;
+      border-radius: 8px; border: none; cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+      font-family: var(--font-mono);
+    }
+    .download-btn:hover { opacity: 0.85; transform: translateY(-2px); }
+
+    .skill-list { display: flex; flex-direction: column; gap: 8px; }
+    .skill-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; color: var(--text-secondary);
+    }
+    .skill-item::before {
+      content: ''; width: 6px; height: 6px;
+      background: var(--accent); border-radius: 50%; flex-shrink: 0;
+    }
+
+    .balance-summary {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px;
+    }
+    .bal-box {
+      background: var(--bg-secondary); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px; text-align: center;
+    }
+    .bal-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .bal-val { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--text-primary); }
+    .bal-box.balanced { border-color: rgba(52,211,153,0.3); }
+    .bal-box.balanced .bal-val { color: #34d399; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    
+    .lang-toggle {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 13px;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.2s;
+      font-family: var(--font-mono);
+      }
+    .lang-toggle:hover {
+      border-color: var(--border-hover);
+      color: var(--text-primary);
+      }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-container">
+    <a href="../../index.html" class="nav-logo">Thery<span>.</span></a>
+    <div class="nav-right">
+      <a href="../../index.html#cases" class="nav-back btn-back" data-i18n="nav.back">← Kembali</a>
+      <button class="lang-toggle" id="langToggleBtn">EN</button>
+      <button class="theme-toggle" id="themeBtn">
+        <span class="mode-icon-dark">🌙</span>
+        <span class="mode-icon-light" style="display:none">☀️</span>
+        <span class="theme-text" data-i18n="theme.btn">Light</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="case-hero">
+  <div class="breadcrumb reveal">cases <span>/</span> akuntansi</div>
+  <div class="case-badge reveal" data-i18n="akuntansi.hero.badge">📊 ENTERPRISE ACCOUNTING CORE</div>
+  <h1 class="reveal" data-i18n="akuntansi.hero.title">Siklus Akuntansi<br><span class="gradient">End-to-End</span></h1>
+  <p class="reveal" data-i18n="akuntansi.hero.desc">
+    Rekonstruksi penuh siklus keuangan PT Gunung Semeru — dari pencatatan Jurnal Umum, otomatisasi Buku Besar, penyusunan Neraca Lajur, hingga Laporan Keuangan formal dan Jurnal Penutup. Dibangun sesuai standar PSAK yang berlaku di Indonesia.
+  </p>
+  <div class="hero-tags reveal">
+    <span class="tag">Financial Ledger</span>
+    <span class="tag">PSAK Compliance</span>
+    <span class="tag">Accounting Cycle</span>
+    <span class="tag">Worksheet</span>
+    <span class="tag">Google Spreadsheets</span>
+  </div>
+  <div class="hero-stats reveal">
+    <div class="hstat"><span class="hstat-val">Full</span><span class="hstat-label" data-i18n="akuntansi.hero.stat1">End-to-End Cycle</span></div>
+    <div class="hstat"><span class="hstat-val">Auto</span><span class="hstat-label" data-i18n="akuntansi.hero.stat2">General Ledger</span></div>
+    <div class="hstat"><span class="hstat-val">Balanced</span><span class="hstat-label" data-i18n="akuntansi.hero.stat3">Worksheet</span></div>
+    <div class="hstat"><span class="hstat-val">PSAK</span><span class="hstat-label" data-i18n="akuntansi.hero.stat4">Compliant</span></div>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="case-body">
+  <main>
+
+    <!-- CYCLE FLOW -->
+    <div class="section-block reveal">
+      <div class="block-label" data-i18n="akuntansi.cycle.label">Alur Kerja</div>
+      <div class="block-title" data-i18n="akuntansi.cycle.title">Siklus Akuntansi 6 Tahap</div>
+      <div class="cycle-flow">
+        <div class="cycle-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title" data-i18n="akuntansi.cycle.step1.title">Jurnal Umum (General Journal)</div>
+            <div class="step-desc" data-i18n="akuntansi.cycle.step1.desc">Pencatatan setiap transaksi keuangan secara kronologis dengan nomor bukti, nama akun, debet, dan kredit. Format BKK/BKM standar perusahaan.</div>
+          </div>
+        </div>
+        <div class="cycle-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title" data-i18n="akuntansi.cycle.step2.title">Buku Besar (General Ledger)</div>
+            <div class="step-desc" data-i18n="akuntansi.cycle.step2.desc">Posting otomatis dari jurnal umum ke akun-akun buku besar menggunakan formula referensi antar-sheet. Saldo berjalan dihitung secara real-time.</div>
+          </div>
+        </div>
+        <div class="cycle-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title" data-i18n="akuntansi.cycle.step3.title">Neraca Saldo (Trial Balance)</div>
+            <div class="step-desc" data-i18n="akuntansi.cycle.step3.desc">Kompilasi semua saldo akun buku besar untuk memverifikasi keseimbangan total debet dan kredit sebelum penyesuaian.</div>
+          </div>
+        </div>
+        <div class="cycle-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title" data-i18n="akuntansi.cycle.step4.title">Jurnal Penyesuaian & Neraca Lajur</div>
+            <div class="step-desc" data-i18n="akuntansi.cycle.step4.desc">Penyesuaian beban dibayar di muka, penyusutan aktiva tetap, dan akrual. Neraca lajur 10 kolom sebagai jembatan menuju laporan keuangan.</div>
+          </div>
+        </div>
+        <div class="cycle-step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <div class="step-title" data-i18n="akuntansi.cycle.step5.title">Laporan Keuangan</div>
+            <div class="step-desc" data-i18n="akuntansi.cycle.step5.desc">Penyusunan Laporan Laba Rugi, Laporan Perubahan Modal, dan Neraca (Balance Sheet) secara otomatis dari neraca lajur.</div>
+          </div>
+        </div>
+        <div class="cycle-step">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <div class="step-title" data-i18n="akuntansi.cycle.step6.title">Jurnal Penutup (Closing Entries)</div>
+            <div class="step-desc" data-i18n="akuntansi.cycle.step6.desc">Penutupan akun nominal (pendapatan, beban) ke Ikhtisar Laba Rugi dan pemindahan saldo ke Modal Pemilik untuk memulai periode baru.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BALANCE SHEET PREVIEW -->
+    <div class="section-block reveal">
+      <div class="block-label" data-i18n="akuntansi.balance.label">Data Aktual</div>
+      <div class="block-title" data-i18n="akuntansi.balance.title">Neraca — PT Gunung Semeru</div>
+      <p class="block-text" style="margin-bottom:0" data-i18n="akuntansi.balance.desc">Rekap perkiraan buku besar dengan total neraca yang seimbang (balanced).</p>
+      <div class="balance-summary">
+        <div class="bal-box balanced">
+          <div class="bal-label" data-i18n="akuntansi.balance.debet">Total Debet</div>
+          <div class="bal-val">Rp 6,929,850,000</div>
+        </div>
+        <div class="bal-box balanced">
+          <div class="bal-label" data-i18n="akuntansi.balance.kredit">Total Kredit</div>
+          <div class="bal-val">Rp 6,929,850,000</div>
+        </div>
+      </div>
+      <div class="ledger-wrap" style="margin-top:16px">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="akuntansi.table.no">No.</th>
+              <th data-i18n="akuntansi.table.akun">Nama Akun</th>
+              <th class="num" data-i18n="akuntansi.table.debet">Debet</th>
+              <th class="num" data-i18n="akuntansi.table.kredit">Kredit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>100</td><td class="akun">Kas Di Bank</td><td class="num debet">125,000,000</td><td class="num">—</td></tr>
+            <tr><td>101</td><td class="akun">Kas Kecil</td><td class="num debet">5,000,000</td><td class="num">—</td></tr>
+            <tr><td>102</td><td class="akun">Piutang Dagang</td><td class="num debet">11,550,000</td><td class="num">—</td></tr>
+            <tr><td>103</td><td class="akun">Persediaan Barang</td><td class="num debet">23,000,000</td><td class="num">—</td></tr>
+            <tr><td>108</td><td class="akun">Aktiva Tetap</td><td class="num debet">3,424,000,000</td><td class="num">—</td></tr>
+            <tr><td>109</td><td class="akun">Akum. Penyusutan Aktiva Tetap</td><td class="num">—</td><td class="num kredit">1,064,400,000</td></tr>
+            <tr><td>200</td><td class="akun">Utang Dagang</td><td class="num">—</td><td class="num kredit">1,540,000</td></tr>
+            <tr><td>300</td><td class="akun">Modal Saham</td><td class="num">—</td><td class="num kredit">1,000,000,000</td></tr>
+            <tr><td>400</td><td class="akun">Penjualan</td><td class="num">—</td><td class="num kredit">4,285,000,000</td></tr>
+            <tr><td>500</td><td class="akun">Pembelian</td><td class="num debet">2,857,000,000</td><td class="num">—</td></tr>
+            <tr><td>606</td><td class="akun">Beban Gaji Kantor</td><td class="num debet">280,500,000</td><td class="num">—</td></tr>
+            <tr><td>700</td><td class="akun">Pendapatan Bunga</td><td class="num">—</td><td class="num kredit">15,000,000</td></tr>
+          </tbody>
+          <tfoot>
+            <tr class="tfoot-row">
+              <td colspan="2" data-i18n="akuntansi.table.total">TOTAL</td>
+              <td class="num">6,929,850,000</td>
+              <td class="num">6,929,850,000</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <!-- DEPRECIATION -->
+    <div class="section-block reveal">
+      <div class="block-label" data-i18n="akuntansi.dep.label">Penyusutan Aktiva Tetap</div>
+      <div class="block-title" data-i18n="akuntansi.dep.title">Tabel Penyusutan 3 Aset</div>
+      <p class="block-text" data-i18n="akuntansi.dep.desc">Perhitungan penyusutan menggunakan Metode Garis Lurus (SLM) dengan pro-rata berbasis jumlah bulan riil penggunaan aset.</p>
+      <div class="dep-grid">
+        <div class="dep-card">
+          <div class="dep-asset">ASET 01</div>
+          <div class="dep-name" data-i18n="akuntansi.dep.aset1">Gedung</div>
+          <div class="dep-row"><span data-i18n="akuntansi.dep.perolehan">Nilai Perolehan</span><span>Rp 1,584,000,000</span></div>
+          <div class="dep-row"><span data-i18n="akuntansi.dep.umur">Umur Ekonomis</span><span>20 Tahun</span></div>
+          <div class="dep-row"><span data-i18n="akuntansi.dep.pertahun">Penyusutan/Tahun</span><span>Rp 79,200,000</span></div>
+          <div class="dep-row"><span data-i18n="akuntansi.dep.metode">Metode</span><span>SLM</span></div>
+        </div>
+        <div class="dep-card">
+          <div class="dep-asset">ASET 02</div>
+          <div class="dep-name" data-i18n="akuntansi.dep.aset2">Peralatan</div>
+          <div class="dep-row"><span data-i18n="akuntansi.dep.perolehan">Nilai Perolehan</span><span>Rp 360,000,000</span></div>
+          <div class="dep-row"><span data-i18n="akuntansi.dep.umur">Umur Ekonomis</span><span>5 Tahun</span></div>
+          <div class="dep-row"><span data-i18n="akuntansi.dep.pertahun">Penyusutan/Tahun</span><span>Rp 72,000,000</span></div>
+          <div class="dep-row"><span data-i18n="akuntansi.dep.metode">Metode</span><span>SLM</span></div>
+        </div>
+        <div class="dep-card">
+          <div class="dep-asset">ASET 03</div>
+          <div class="dep-name" data-i18n="akuntansi.dep.aset3">Kendaraan</div>
+          <div class="dep-row"><span data-i18n="akuntansi.dep.perolehan">Nilai Perolehan</span><span>Rp 480,000,000</span></div>
+          <div class="dep-row"><span data-i18n="akuntansi.dep.umur">Umur Ekonomis</span><span>8 Tahun</span></div>
+          <div class="dep-row"><span data-i18n="akuntansi.dep.pertahun">Penyusutan/Tahun</span><span>Rp 60,000,000</span></div>
+          <div class="dep-row"><span data-i18n="akuntansi.dep.metode">Metode</span><span>SLM</span></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="sidebar-card reveal">
+      <div class="sidebar-title" data-i18n="akuntansi.sidebar.download.title">⬇ Unduh File</div>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;line-height:1.6" data-i18n="akuntansi.sidebar.download.desc">File spreadsheet lengkap dengan semua sheet: Jurnal Umum, Buku Besar, Neraca Lajur, dan Laporan Keuangan.</p>
+      <a href="PT_Gunung.xlsx" class="download-btn" download data-i18n="akuntansi.sidebar.download.btn">
+        📥 Download .xlsx
+      </a>
+    </div>
+
+    <div class="sidebar-card reveal">
+      <div class="sidebar-title" data-i18n="akuntansi.sidebar.detail.title">📋 Detail Proyek</div>
+      <div class="meta-row"><span class="meta-key" data-i18n="akuntansi.sidebar.detail.entitas">Entitas</span><span class="meta-val">PT Gunung Semeru</span></div>
+      <div class="meta-row"><span class="meta-key">Tools</span><span class="meta-val">Google Spreadsheets</span></div>
+      <div class="meta-row"><span class="meta-key" data-i18n="akuntansi.sidebar.detail.standar">Standar</span><span class="meta-val">PSAK Indonesia</span></div>
+      <div class="meta-row"><span class="meta-key" data-i18n="akuntansi.sidebar.detail.akun">Total Akun</span><span class="meta-val">30+ Perkiraan</span></div>
+      <div class="meta-row"><span class="meta-key" data-i18n="akuntansi.sidebar.detail.neraca">Neraca</span><span class="meta-val">Balanced ✓</span></div>
+    </div>
+
+    <div class="sidebar-card reveal">
+      <div class="sidebar-title" data-i18n="akuntansi.sidebar.skill.title">🛠 Skill Diterapkan</div>
+      <div class="skill-list">
+        <div class="skill-item" data-i18n="akuntansi.sidebar.skill.1">Formula referensi antar-sheet</div>
+        <div class="skill-item" data-i18n="akuntansi.sidebar.skill.2">Otomatisasi posting buku besar</div>
+        <div class="skill-item" data-i18n="akuntansi.sidebar.skill.3">Pro-rata penyusutan per bulan</div>
+        <div class="skill-item" data-i18n="akuntansi.sidebar.skill.4">Jurnal penyesuaian & penutup</div>
+        <div class="skill-item" data-i18n="akuntansi.sidebar.skill.5">Neraca lajur 10 kolom</div>
+        <div class="skill-item" data-i18n="akuntansi.sidebar.skill.6">Validasi saldo debet = kredit</div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<script>
+  // Theme
+  const themeBtn = document.getElementById('themeBtn');
+  const darkIcon = document.querySelector('.mode-icon-dark');
+  const lightIcon = document.querySelector('.mode-icon-light');
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  if (savedTheme === 'light') { darkIcon.style.display='none'; lightIcon.style.display='block'; }
+
+  themeBtn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    darkIcon.style.display = next === 'dark' ? 'block' : 'none';
+    lightIcon.style.display = next === 'light' ? 'block' : 'none';
+  });
+
+  // Reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+<script type="module" src="../../assets/js/lang.js"></script>
+</body>
+</html>

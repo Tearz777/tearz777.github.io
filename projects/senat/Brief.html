@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Senat Pribadi — Thery Vissabil Lillah</title>
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../assets/css/components.css" />
+  <link rel="stylesheet" href="../../assets/css/responsive.css" />
+  <link rel="stylesheet" href="brief.css" />
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <div class="nav-left">
+        <a href="../../index.html" class="nav-logo">Thery<span>.</span></a>
+        <div class="nav-breadcrumb">
+          projects <span class="sep">/</span> <span class="current">Senat Pribadi</span>
+        </div>
+      </div>
+      <div class="nav-right">
+        <div style="display:flex; gap:8px; align-items:center;">
+            <a href="../../index.html#projects" class="nav-back" data-i18n="nav.back">←</a>
+            <button class="lang-toggle" id="langToggleBtn">EN</button>
+        </div>
+        <button class="theme-toggle" id="themeBtn">
+          <span class="theme-icon">☀️</span>
+          <span class="theme-text" data-i18n="theme.btn">Light</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  
+  <main>
+    <section class="senat-hero">
+      <div class="container">
+        <div class="senat-badge-status" data-i18n="senat.hero.badge">⚖️ DECISION SUPPORT SYSTEM</div>
+        <h1 class="senat-title" data-i18n="senat.hero.title">Senat Pribadi</h1>
+        <p class="senat-tagline" data-i18n="senat.hero.tagline">Ruang sidang internal berbasis AI untuk memecah satu masalah menjadi lima sudut pandang.</p>
+        <div class="senat-cta">
+          <a href="index.html" class="btn-primary" data-i18n="senat.hero.btn.open">Buka Sidang →</a>
+          <a href="https://github.com/Tearz777/Senat-Pribadi" target="_blank" class="btn-secondary" data-i18n="senat.hero.btn.source">Source Code</a>
+        </div>
+      </div>
+    </section>
+    <section class="senat-desc">
+      <div class="container">
+        <p class="senat-desc-text" data-i18n="senat.desc.text">Senat Pribadi adalah simulasi ruang sidang internal berbasis AI yang memecah satu masalah menjadi lima sudut pandang berbeda: logika, etika, skeptisisme, empati, dan pragmatisme. Setiap "anggota senat" memberi analisis sendiri sebelum sistem menarik kesimpulan akhir yang lebih seimbang dan manusiawi. Dibangun dengan HTML, CSS, dan JavaScript vanilla, proyek ini menggabungkan animasi sinematik, dark mode, efek typing, serta integrasi AI generatif untuk menciptakan pengalaman refleksi yang terasa personal dan imersif.</p>
+        <div class="senat-status-block">
+          <span class="senat-status-badge" data-i18n="senat.desc.status.badge">Hiatus</span>
+          <p class="senat-status-text" data-i18n="senat.desc.status.text">Pengembangan proyek sementara dihentikan karena keterbatasan biaya API AI generatif yang digunakan. Ternyata bahkan krisis eksistensial digital pun sekarang pakai sistem langganan.</p>
+        </div>
+      </div>
+    </section>
+    <section class="senat-perspectives">
+        <div class="container">
+        <h2 class="senat-section-title" data-i18n="senat.perspectives.title">Anggota Senat</h2>
+        <div class="perspectives-grid">
+
+          <div class="perspective-card">
+            <div class="perspective-icon">⚡</div>
+            <h3 class="perspective-name" data-i18n="senat.perspectives.logic.name">Logika</h3>
+            <p class="perspective-desc" data-i18n="senat.perspectives.logic.desc">Menganalisis masalah secara rasional, berbasis data dan sebab-akibat.</p>
+          </div>
+
+          <div class="perspective-card">
+            <div class="perspective-icon">⚖️</div>
+            <h3 class="perspective-name" data-i18n="senat.perspectives.ethics.name">Etika</h3>
+            <p class="perspective-desc" data-i18n="senat.perspectives.ethics.desc">Menimbang dampak moral dan nilai-nilai yang terlibat dalam keputusan.</p>
+          </div>
+
+          <div class="perspective-card">
+            <div class="perspective-icon">🔍</div>
+            <h3 class="perspective-name" data-i18n="senat.perspectives.skeptic.name">Skeptis</h3>
+            <p class="perspective-desc" data-i18n="senat.perspectives.skeptic.desc">Mempertanyakan asumsi dan mencari celah dalam setiap argumen.</p>
+          </div>
+
+          <div class="perspective-card">
+            <div class="perspective-icon">🫀</div>
+            <h3 class="perspective-name" data-i18n="senat.perspectives.empathy.name">Empati</h3>
+            <p class="perspective-desc" data-i18n="senat.perspectives.empathy.desc">Membaca dimensi emosional dan dampak keputusan terhadap manusia.</p>
+          </div>
+
+          <div class="perspective-card">
+            <div class="perspective-icon">🔧</div>
+            <h3 class="perspective-name" data-i18n="senat.perspectives.pragmatic.name">Pragmatis</h3>
+            <p class="perspective-desc" data-i18n="senat.perspectives.pragmatic.desc">Fokus pada solusi yang realistis, actionable, dan bisa dijalankan sekarang.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+        <p class="footer-text">Thery Vissabil Lillah — <a href="../../index.html" data-i18n="senat.footer.back">Kembali ke Portofolio</a></p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { initTheme } from '../../assets/js/theme.js';
+    initTheme();
+  </script>
+  <script src="../../assets/js/lang.js"></script>
+
+</body>
+</html>
